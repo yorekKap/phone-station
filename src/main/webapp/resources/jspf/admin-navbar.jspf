@@ -1,0 +1,96 @@
+<fmt:message key="admin.navbar.mainpage" var = "loc_mainpage"/>
+<fmt:message key="admin.navbar.users" var = "loc_users"/>
+<fmt:message key="admin.navbar.tariffs" var = "loc_tariffs"/>
+<fmt:message key="navbar.logout" var = "loc_logout"/>
+<fmt:message key="navbar.languages" var = "loc_languages"/>
+<fmt:message key="admin.navbar.services" var = "loc_services"/>
+
+
+      <!-- BOOTSTRAP STYLES-->
+        <link href="/resources/css/bootstrap.css" rel="stylesheet" />
+        <!-- FONTAWESOME STYLES-->
+        <link href="/resources/css/font-awesome.css" rel="stylesheet" />
+        <!-- CUSTOM STYLES-->
+        <link href="/resources/css/custom.css" rel="stylesheet" />
+        <!-- GOOGLE FONTS-->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="adjust-nav">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"><i class="fa fa-square-o "></i>&nbsp;AwesomePhone</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href = "/logout">${loc_logout}</a></li>
+						<li class="dropdown">
+						<a class="dropdown-toggle"
+							data-toggle="dropdown" href="#">${loc_languages} <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a onclick="changeLang('ua')">ua</a></li>
+								<li><a onclick="changeLang('en')">en</a></li>
+							</ul></li>
+					</ul>
+                    </div>
+
+                </div>
+            </div>
+
+             <div id="wrapper">
+
+            <!-- /. NAV TOP  -->
+            <nav    class="navbar-default navbar-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="main-menu">
+                        <li class="text-center user-image-back">
+                            <img src="/resources/img/find_user.png" class="img-responsive" />
+
+                        </li>
+
+                        <li>
+                            <a href="/admin">${loc_mainpage}</a>
+                        </li>
+
+                        <li>
+                            <a href="/admin/users">${loc_users}</a>
+                        </li>
+
+                        <li>
+                            <a href="/admin/tariffs">${loc_tariffs}</a>
+                        </li>
+
+                        <li>
+                        	<a href = "/admin/services">${loc_services}</a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </nav>
+            </div>
+
+ <!-- JQUERY SCRIPTS -->
+        <script src="/resources/js/jquery-1.10.2.js"></script>
+        <!-- BOOTSTRAP SCRIPTS -->
+        <script src="/resources/js/bootstrap.min.js"></script>
+        <!-- METISMENU SCRIPTS -->
+        <script src="/resources/js/jquery.metisMenu.js"></script>
+        <!-- CUSTOM SCRIPTS -->
+        <script src="/resources/js/custom.js"></script>
+
+
+ <script type="text/javascript">
+
+ 	function changeLang(language){
+ 		console.log(language);
+ 		var pathname = window.location.pathname;
+ 		window.location.assign(pathname + "?lang=" + language);
+
+ 	}
+
+ </script>
