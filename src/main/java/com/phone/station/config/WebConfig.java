@@ -7,7 +7,6 @@ import org.apache.catalina.connector.Request;
 import org.apache.tomcat.util.descriptor.web.LoginConfig;
 
 import com.phone.station.service.interfaces.AuthenticationService;
-import com.phone.station.service.interfaces.MessageService;
 import com.phone.station.service.interfaces.PaymentService;
 import com.phone.station.service.interfaces.ServicesService;
 import com.phone.station.service.interfaces.TariffService;
@@ -19,7 +18,6 @@ import com.phone.station.web.controllers.AdminUsersController;
 import com.phone.station.web.controllers.HomeController;
 import com.phone.station.web.controllers.LoginController;
 import com.phone.station.web.controllers.LogoutController;
-import com.phone.station.web.controllers.MessagesController;
 import com.phone.station.web.controllers.PaymentsController;
 import com.phone.station.web.controllers.RefillController;
 import com.phone.station.web.controllers.RegisterController;
@@ -48,7 +46,6 @@ public class WebConfig implements Config {
 		TariffService tariffService = WebAppContext.get(TariffService.class);
 		ServicesService servicesService = WebAppContext.get(ServicesService.class);
 		PaymentService paymentService = WebAppContext.get(PaymentService.class);
-		MessageService messageService = WebAppContext.get(MessageService.class);
 
 		controllersMapper.add("/", 			        new WelcomeController())
 						 .add("/login", 	        new LoginController(authService))

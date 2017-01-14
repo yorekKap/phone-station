@@ -3,13 +3,11 @@ package com.phone.station.config;
 import javax.sql.DataSource;
 
 import com.phone.station.dao.factories.DataSourceFactory;
-import com.phone.station.dao.implementation.jdbc.JdbcMessageDao;
 import com.phone.station.dao.implementation.jdbc.JdbcPaymentDao;
 import com.phone.station.dao.implementation.jdbc.JdbcServiceBidDao;
 import com.phone.station.dao.implementation.jdbc.JdbcServiceDao;
 import com.phone.station.dao.implementation.jdbc.JdbcUserDao;
 import com.phone.station.dao.implementation.jdbc.JdbcTariffDao;
-import com.phone.station.dao.interfaces.MessageDao;
 import com.phone.station.dao.interfaces.PaymentDao;
 import com.phone.station.dao.interfaces.ServiceBidDao;
 import com.phone.station.dao.interfaces.ServiceDao;
@@ -28,7 +26,6 @@ public class DaoConfig implements Config{
 			.add(ServiceDao.class,    new JdbcServiceDao(dataSource))
 			.add(UserDao.class, 	  new JdbcUserDao(dataSource))
 			.add(TariffDao.class,     new JdbcTariffDao(dataSource))
-			.add(PaymentDao.class,    new JdbcPaymentDao(dataSource))
-			.add(MessageDao.class, 	  new JdbcMessageDao(dataSource));
+			.add(PaymentDao.class,    new JdbcPaymentDao(dataSource));
 	}
 }
