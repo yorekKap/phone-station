@@ -3,7 +3,19 @@ package com.phone.station.dao.builder;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+
+/**
+ * Class that provide support of WHERE clause to it's
+ * subclasses
+ *
+ *
+ * @author yuri
+ *
+ * @param <T> subclass query type, needed for the convenient
+ * 			  return to the right query builder class
+ */
 public abstract class WhereQuery<T>{
+
 	protected Class<T> clazz;
 	protected StringBuilder predicates;
 
@@ -122,8 +134,6 @@ public abstract class WhereQuery<T>{
 		return getDowncastedThis();
 
 	}
-
-
 
 	public WhereQuery<T> and(String columnName){
 		predicates.append(" AND " + columnName);

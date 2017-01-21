@@ -1,7 +1,16 @@
 package com.phone.station.web.security;
 
+import com.phone.station.entities.User;
 import com.phone.station.entities.enums.Role;
 
+/**
+ * Representation of the user authorized in the system
+ * <p>
+ * The real {@link User} object isn't stored in session, because of possibility of
+ * cache aging.
+ * @author yuri
+ *
+ */
 public class UserPrincipal {
 	private String username;
 	private Role role;

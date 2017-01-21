@@ -55,5 +55,11 @@ public class Service implements Identified<Long>{
 		this.cost = cost;
 	}
 
+	@Override
+	public String toString() {
+		return "Service [id=" + id + ", title=" + title + ", description=" + description + ", cost=" + cost + "]";
+	}
+
+
 
 }

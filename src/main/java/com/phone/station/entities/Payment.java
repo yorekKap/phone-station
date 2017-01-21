@@ -82,6 +82,12 @@ public class Payment implements Identified<Long>{
 		this.userId = userId;
 	}
 
+	@Override
+	public String toString() {
+		return "Payment [id=" + id + ", title=" + title + ", description=" + description + ", price=" + price
+				+ ", date=" + date + ", userId=" + userId + "]";
+	}
+
 
 
 }

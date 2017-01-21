@@ -1,67 +1,121 @@
 package com.phone.station.web.security;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.phone.station.entities.enums.Role;
-import com.phone.station.exceptions.security.SecurityContextBuilderException;
-import com.phone.station.utils.ContextPathResolver;
+import org.apache.catalina.Session;
 
+import com.phone.station.entities.enums.Role;
+import com.phone.station.exceptions.builders.SecurityContextBuildingException;
+import com.phone.station.utils.ContextPathFetcher;
+
+
+/**
+ *Class for managing security rules which includes
+ *what {@link Role} is required for every URL and to what
+ *URL to redirect each {@link Role}
+ *
+ * @author yuri
+ *
+ */
 public class SecurityContext {
 
 	private static final String PRINCIPAL_ATTRIBUTE = "principal";
 
-	private Map<String, Role> urls;
-	private Map<String, Role> matches;
- 	private Role forAny = Role.NONE;
-	private String redirectUrl;
+	/**
+	 *Precise URL : Roles
+	 */
+	private Map<String, List<Role>> urls;
 
-	private SecurityContext(Map<String, Role> urls, Map<String, Role> matches, String redirectUrl) {
+	/**
+	 *URL pattern : Roles
+	 */
+	private Map<String, List<Role>> matches;
+
+	/**
+	 *Role for every URL that aren't in {@code #urls} or {@code #matches}
+	 */
+	private List<Role> forAny;
+
+	/**
+	 *Role : Redirect URL
+	 */
+	private Map<Role, String> redirectUrls;
+
+
+	/**
+	 * Redirect URL for every role not specified in {@link #redirectUrls}
+	 */
+	private String defaultRedirectUrl;
+
+	private SecurityContext(Map<String, List<Role>> urls, Map<String, List<Role>> matches, String redirectUrl,
+							Map<Role, String> redirectUrls) {
 		this.urls = urls;
 		this.matches = matches;
+		this.defaultRedirectUrl = redirectUrl;
+		this.redirectUrls = redirectUrls;
+
 	}
 
-	private SecurityContext(Map<String, Role> urls, Map<String, Role> matches, Role forAny,
-							String redirectUrl) {
+	private SecurityContext(Map<String, List<Role>> urls, Map<String, List<Role>> matches, List<Role> forAny,
+							String redirectUrl, Map<Role, String> redirectUrls) {
 		this.urls = urls;
 		this.matches = matches;
 		this.forAny = forAny;
-		this.redirectUrl = redirectUrl;
+		this.defaultRedirectUrl = redirectUrl;
+		this.redirectUrls = redirectUrls;
 	}
 
-	public boolean hasAcces(HttpServletRequest request){
-		String url = ContextPathResolver.getContextPath(request);
 
-		Role roleRequired;
-		if((roleRequired = urls.get(url)) != null){
-			return checkRole(roleRequired, request);
+	/**
+	 * Check if given {@code role} has access to the {@code url}
+	 *
+	 * @param url
+	 * @param role
+	 * @return true if access can be acquired, false otherwise
+	 */
+	public boolean hasAcces(String url, Role role){
+		List<Role> rolesRequired;
+		if((rolesRequired = urls.get(url)) != null){
+			return checkRole(rolesRequired, role);
 		}
-		else if((roleRequired = getMatch(url)) != null){
-			return checkRole(roleRequired, request);
+		else if((rolesRequired = getMatch(url)) != null){
+			return checkRole(rolesRequired, role);
 		}
 		else{
-			return checkRole(forAny, request);
+			return checkRole(forAny, role);
 		}
 	}
 
-	private boolean checkRole(Role roleRequired, HttpServletRequest request){
-		if(roleRequired == Role.NONE){
+
+	/**
+	 * Check if actual {@link Role} matches required {@link Role}
+	 *
+	 * @param requiredRoles
+	 * @param actualRole
+	 * @return true if matches, false - otherwise
+	 */
+	private boolean checkRole(List<Role> requiredRoles, Role actualRole){
+		if(requiredRoles.contains(Role.ANY)){
 			return true;
 		}
-		Object principalObj = request.getSession().getAttribute(PRINCIPAL_ATTRIBUTE);
 
-		if(principalObj == null){
-			return false;
-		}
-
-		UserPrincipal principal = (UserPrincipal)principalObj;
-
-		return principal.getRole().getPriority() >= roleRequired.getPriority();
+		return requiredRoles.contains(actualRole);
 	}
 
-	private Role getMatch(String url){
+
+	/**
+	 * Return {@link List} {@link Role} that binded to the pattern that matches {@code url}
+	 *
+	 * @param url that match against pattern is {@code #matches}
+	 * @return {@link Role}
+	 */
+	private List<Role> getMatch(String url){
 		String key = matches.keySet().stream()
 						.filter(x -> url.matches(x))
 						.findFirst()
@@ -74,22 +128,46 @@ public class SecurityContext {
 		return matches.get(key);
 	}
 
-	public String getRedirectUrl(){
-		return redirectUrl;
+
+	/**
+	 * Get redirect URL for given {@link Role}
+	 *
+	 * @param role
+	 * @return URL
+	 */
+	public String getRedirectUrl(Role role){
+		String redirectUrl = redirectUrls.get(role);
+		if(redirectUrl != null){
+			return redirectUrl;
+		}
+		else{
+			return defaultRedirectUrl;
+		}
 	}
 
+	/**
+	 * @return builder class
+	 */
 	public static SecurityContextBuilder createBuilder(){
 		return new SecurityContextBuilder();
 	}
 
+
+	/**
+	 * Builder class for the {@link SecurityContext}
+	 *
+	 * @author yuri
+	 *
+	 */
 	public static class SecurityContextBuilder implements SecurityContextBuilderAccesModifier{
 
 		private static final String MANDATORY_REDIRECT_URL_MESSAGE = "Redirect url must be set";
 
-		private Map<String, Role> urls = new HashMap<>();
-		private Map<String, Role> matches = new HashMap<>();
-		private Role forAny = Role.NONE;
-		private String redirectUrl;
+		private Map<String, List<Role>> urls = new HashMap<>();
+		private Map<String, List<Role>> matches = new HashMap<>();
+		private Map<Role, String> redirectUrls = new HashMap<>();
+		private List<Role> forAny = Arrays.asList(Role.ANY);
+		private String defaultRedirectUrl;
 		private String tempUrl;
 		private String tempMatch;
 
@@ -107,42 +185,37 @@ public class SecurityContext {
 			return this;
 		}
 
-		public SecurityContextBuilder setRedirectUrl(String redirectUrl){
-			this.redirectUrl = redirectUrl;
-			return this;
-		}
-
 		@Override
-		public SecurityContextBuilder hasRole(Role role) {
-			putRoleToMap(role);
+		public SecurityContextBuilder hasRole(Role... roles) {
+			putRolesToMap(Arrays.asList(roles));
 			clearTemps();
 			return this;
 		}
 
 		@Override
 		public SecurityContextBuilder authenticated() {
-			putRoleToMap(Role.USER);
+			putRolesToMap(Arrays.asList(Role.USER));
 			clearTemps();
 			return this;
 		}
 
 		@Override
 		public SecurityContextBuilder permitAll() {
-			putRoleToMap(Role.NONE);
+			putRolesToMap(Arrays.asList(Role.ANY));
 			clearTemps();
 			return this;
 		}
 
 
-		private void putRoleToMap(Role role){
+		private void putRolesToMap(List<Role> roles){
 			if (tempUrl != null){
-				urls.put(tempUrl, role);
+				urls.put(tempUrl, roles);
 			}
 			else if (tempMatch != null){
-				matches.put(tempMatch, role);
+				matches.put(tempMatch, roles);
 			}
 			else{
-				forAny = role;
+				forAny = roles;
 			}
 		}
 
@@ -151,11 +224,22 @@ public class SecurityContext {
 			tempMatch = null;
 		}
 
+		public SecurityContextBuilder setDefaultRedirectUrl(String redirectUrl){
+			this.defaultRedirectUrl = redirectUrl;
+			return this;
+		}
+
+		public SecurityContextBuilder addRedirectUrlForRole(Role role, String redirectUrl){
+			this.redirectUrls.put(role, redirectUrl);
+			return this;
+		}
+
+
 		public SecurityContext build(){
-			if(redirectUrl == null){
-				throw new SecurityContextBuilderException(MANDATORY_REDIRECT_URL_MESSAGE);
+			if(defaultRedirectUrl == null){
+				throw new SecurityContextBuildingException(MANDATORY_REDIRECT_URL_MESSAGE);
 			}
-			return new SecurityContext(urls, matches, forAny, redirectUrl);
+			return new SecurityContext(urls, matches, forAny, defaultRedirectUrl, redirectUrls);
 		}
 	}
 }

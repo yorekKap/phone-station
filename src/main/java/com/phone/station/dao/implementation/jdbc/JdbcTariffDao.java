@@ -10,8 +10,15 @@ import com.phone.station.dao.builder.SelectQuery;
 import com.phone.station.dao.interfaces.TariffDao;
 import com.phone.station.dao.parsers.ObjectToColumnValueMapParser;
 import com.phone.station.dao.parsers.ResultSetParser;
+import com.phone.station.entities.Payment;
 import com.phone.station.entities.Tariff;
 
+/**
+ * DAO class for managing {@link Tariff} entities
+ *
+ * @author yuri
+ *
+ */
 public class JdbcTariffDao extends AbstractJdbcDao<Tariff, Long> implements TariffDao{
 
 	private static final String	TABLE_NAME = "tariffs";
@@ -28,6 +35,10 @@ public class JdbcTariffDao extends AbstractJdbcDao<Tariff, Long> implements Tari
 		super(dataSource);
 		// TODO Auto-generated constructor stub
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Tariff prepareResultSet(ResultSet rs) throws SQLException {
 		ResultSetParser parser = new ResultSetParser(rs);
@@ -36,19 +47,35 @@ public class JdbcTariffDao extends AbstractJdbcDao<Tariff, Long> implements Tari
 		return tariff;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+
 	@Override
 	public Map<String, Object> getValuesMap(Tariff object) {
 		return ObjectToColumnValueMapParser.parse(object, Tariff.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+
 	@Override
 	public void provideInnerJoin(SelectQuery query) {
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 
 	@Override
 	public String getTableName() {
 		return TABLE_NAME;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
 
 	@Override
 	public String getPK() {

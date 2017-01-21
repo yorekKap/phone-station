@@ -1,4 +1,4 @@
-package com.phone.station.web.controllers;
+package com.phone.station.web.controllers.authorization;
 
 import java.io.IOException;
 import java.util.Date;
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.connector.Request;
+import org.apache.log4j.Logger;
 
 import com.phone.station.entities.User;
 import com.phone.station.entities.enums.Role;
@@ -14,6 +15,7 @@ import com.phone.station.service.interfaces.UserService;
 import com.phone.station.web.dispatcher.Controller;
 
 public class RegisterController extends Controller {
+	private static final Logger log = Logger.getLogger(RegisterController.class);
 
 	UserService userService;
 
@@ -41,6 +43,8 @@ public class RegisterController extends Controller {
 
 		if (userService.create(user)){
 			try {
+				log.info("User with username: "+ user.getUsername() + ";password: " +
+						  user.getPassword() + "is registered");
 				response.sendRedirect(LOGIN_URL);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -50,6 +54,7 @@ public class RegisterController extends Controller {
 		else{
 			request.setAttribute("user", user);
 			request.setAttribute("failed", true);
+			log.info("Register is failed for user: " + user.toString());
 			return "register";
 		}
 	}

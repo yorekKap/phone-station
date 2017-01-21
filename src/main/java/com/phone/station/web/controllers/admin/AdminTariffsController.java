@@ -1,4 +1,4 @@
-package com.phone.station.web.controllers;
+package com.phone.station.web.controllers.admin;
 
 import java.io.IOException;
 

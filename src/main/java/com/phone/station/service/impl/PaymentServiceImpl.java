@@ -1,8 +1,9 @@
 package com.phone.station.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import com.phone.station.dao.interfaces.PaymentDao;
 import com.phone.station.dao.interfaces.UserDao;
@@ -11,6 +12,7 @@ import com.phone.station.entities.User;
 import com.phone.station.service.interfaces.PaymentService;
 
 public class PaymentServiceImpl implements PaymentService {
+	private static final Logger log = Logger.getLogger(PaymentServiceImpl.class);
 
 	PaymentDao paymentDao;
 	UserDao userDao;
@@ -33,6 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
 		payment.setUserId(userId);
 		payment.setDate(new Date());
 
+		log.info("Payment:" + payment + " is created");
 		return paymentDao.persist(payment);
 	}
 

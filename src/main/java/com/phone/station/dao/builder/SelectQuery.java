@@ -7,17 +7,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.phone.station.exceptions.dao.MySQLException;
 
+/**
+ * Used for the {@code SELECT} query building
+ *
+ * @author yuri
+ *
+ */
 public final class SelectQuery extends WhereQuery<SelectQuery>{
+	private final static Logger log = Logger.getLogger(SelectQuery.class);
 
 	private Connection connection;
 	private String tableName;
 	private String orderByColumn;
 	private String[] columnNames;
 	private StringBuilder join = new StringBuilder();
-
-
 
 	protected SelectQuery(Connection connection, String[] columnNames, String tableName) {
 		super(SelectQuery.class);
@@ -80,6 +87,7 @@ public final class SelectQuery extends WhereQuery<SelectQuery>{
 				return null;
 			}
 		} catch (SQLException e) {
+			log.error("SQLException in SelectQuery : ", e);
 			throw new MySQLException(e.getMessage());
 		}
 	}
@@ -87,9 +95,11 @@ public final class SelectQuery extends WhereQuery<SelectQuery>{
 	public ResultSet execute(Statement statement){
 		try {
 			statement = connection.createStatement();
+			log.info(toString() + " Select query executing");
 			return statement.executeQuery(toString());
 
 		} catch (SQLException e) {
+			log.error("SQLException in SelectQuery : ", e);
 			throw new MySQLException(e.getMessage());
 		}
 

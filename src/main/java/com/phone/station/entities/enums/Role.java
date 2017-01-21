@@ -1,7 +1,7 @@
 package com.phone.station.entities.enums;
 
 public enum Role {
-	NONE(0), USER(1), ADMIN(2);
+	ANY(0), NOT_AUTHNENTICATED(1), USER(2), ADMIN(3);
 
 	private Role(int prority){
 		this.priority = prority;

@@ -1,6 +1,6 @@
-package com.phone.station.web.dispatcher;
+package com.phone.station.web.resolvers;
 
-import com.phone.station.exceptions.tools.ViewResolverException;
+import com.phone.station.exceptions.builders.ViewResolverBuildingException;
 
 public class ViewResolver {
 
@@ -43,7 +43,7 @@ public class ViewResolver {
 
 		public ViewResolver create(){
 			if(prefix == null || suffix == null){
-				throw new ViewResolverException("Suffix and prefix shouldn't be null");
+				throw new ViewResolverBuildingException("Suffix and prefix shouldn't be null");
 			}
 			return new ViewResolver(prefix, suffix);
 		}

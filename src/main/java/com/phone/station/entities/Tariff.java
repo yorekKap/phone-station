@@ -88,6 +88,14 @@ public class Tariff implements Identified<Long> {
 		this.internetMegabytes = internetMegabytes;
 	}
 
+	@Override
+	public String toString() {
+		return "Tariff [id=" + id + ", title=" + title + ", description=" + description + ", costPerMonth="
+				+ costPerMonth + ", minutesOfCallsInNetwork=" + minutesOfCallsInNetwork
+				+ ", minutesOfCallsOutOfNetwork=" + minutesOfCallsOutOfNetwork + ", internetMegabytes="
+				+ internetMegabytes + "]";
+	}
+
 
 
 }

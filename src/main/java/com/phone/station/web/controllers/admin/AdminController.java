@@ -1,4 +1,4 @@
-package com.phone.station.web.controllers;
+package com.phone.station.web.controllers.admin;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,7 +7,6 @@ import com.phone.station.service.interfaces.UserService;
 import com.phone.station.web.dispatcher.Controller;
 
 public class AdminController extends Controller {
-
 	private final String ADMIN_USERNAME = "Admin";
 
 	UserService userService;
@@ -21,6 +20,5 @@ public class AdminController extends Controller {
 		request.setAttribute("admin", userService.findByUsername(ADMIN_USERNAME));
 		return "admin";
 	}
-
-
+	
 }

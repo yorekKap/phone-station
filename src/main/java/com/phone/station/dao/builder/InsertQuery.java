@@ -10,9 +10,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.apache.log4j.Logger;
+
 import com.phone.station.exceptions.dao.MySQLInsertException;
 
+
+/**
+ *  Used for the {@code INSERT} query building
+ * 
+ * @author yuri
+ *
+ */
 public class InsertQuery {
+	private final static Logger log = Logger.getLogger(InsertQuery.class);
 
 	private Connection connection;
 	private String tableName;
@@ -41,16 +51,16 @@ public class InsertQuery {
 
 	public int execute(){
 		try (PreparedStatement statement = connection.prepareStatement(toString())){
-			//set values
 			int i = 1;
 			for(Object o : values.values()){
 					statement.setObject(i++, o);
 			}
 
-			System.out.println(statement.toString());
+			log.info(statement.toString() + " statement executing");
 			return statement.executeUpdate();
 
 		} catch (SQLException e) {
+			log.error("SQLException in InsertQuery :",e);
 			throw new MySQLInsertException(e.getMessage());
 		}
 	}
@@ -68,9 +78,7 @@ public class InsertQuery {
 		StringBuilder sqlBuilder = new StringBuilder("INSERT INTO ")
 													.append(tableName + columns)
 													.append(" VALUES " + questionMarks + ";");
-		System.out.println(sqlBuilder.toString());
 
-		values.entrySet().stream().forEach(x -> System.out.println(x.getValue()));
 		return sqlBuilder.toString();
 	}
 

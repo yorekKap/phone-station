@@ -42,11 +42,11 @@
 
 						<c:set var = "end" value = "${i}"></c:set>
 
-						<c:if test="${ end >= length}">
-							<c:set var="end" value = "${length}"></c:set>
+						<c:if test="${ end >= (length - 1)}">
+							<c:set var="end" value = "${length - 1}"></c:set>
 						</c:if>
 
-						<c:forEach var = "j" begin="${i - 1}" end = "${end }">
+						<c:forEach var = "j" begin="${i - 1}" end = "${end}">
                          <c:set var = "tariff" value = "${tariffs[j]}"></c:set>
 	                        <div class="col-md-4 col-sm-4 col-xs-4">
                             <div class="panel panel-primary text-center no-boder bg-color-blue">

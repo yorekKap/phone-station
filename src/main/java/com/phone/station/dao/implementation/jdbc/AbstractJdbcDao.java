@@ -13,16 +13,64 @@ import com.phone.station.dao.interfaces.GenericDao;
 import com.phone.station.entities.Identified;
 import com.phone.station.exceptions.dao.MySQLException;
 
+
+/**
+ * Generic JDBC implementation of {@link GenericDao}
+ *
+ * @author yuri
+ *
+ * @param <T> entity that DAO operates on, should implement {@link Identified}
+ * @param <K> primary key type
+ */
+/**
+ * @author yuri
+ *
+ * @param <T>
+ * @param <K>
+ */
 public abstract class AbstractJdbcDao<T extends Identified<Long>, K extends Number> implements GenericDao<T, K>{
 
+	/**
+	 * Converts result set into entity type
+	 *
+	 * @param rs {@link ResultSet} to convert
+	 * @return entity
+	 * @throws SQLException
+	 */
 	public abstract T prepareResultSet(ResultSet rs) throws SQLException;
+
+	/**
+	 * Convert entity to values map for it's later
+	 * insertion in the UPDATE/INSERT queries
+	 *
+	 * @param object entity to be converted
+	 * @return {@link Map} of column name - value pairs
+	 */
 	public abstract Map<String, Object> getValuesMap(T object);
 
+
+	/**
+	 * @return name of corresponding table
+	 */
 	public abstract String getTableName();
+
+
+	/**
+	 * @return primary key column of corresponding table
+	 */
 	public abstract String getPK();
+
+
+	/**
+	 * Provide default select query with {@code Join}(if necessary)
+	 *
+	 * @param query that should be provided with {@code Join}
+	 */
 	public abstract void provideInnerJoin(SelectQuery query);
 
-
+	/**
+	 * Main builder for all queries
+	 */
 	protected JdbcQueryBuilder builder;
 
 	public AbstractJdbcDao(DataSource dataSource) {

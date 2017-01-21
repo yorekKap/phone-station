@@ -2,12 +2,14 @@ package com.phone.station.service.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.phone.station.dao.interfaces.ServiceDao;
 import com.phone.station.entities.Service;
-import com.phone.station.entities.User;
 import com.phone.station.service.interfaces.ServicesService;
 
 public class ServicesServiceImpl implements ServicesService{
+	private static final Logger log = Logger.getLogger(ServicesServiceImpl.class);
 
 	ServiceDao serviceDao;
 
@@ -55,17 +57,21 @@ public class ServicesServiceImpl implements ServicesService{
 		service.setDescription(description);
 		service.setCost(cost);
 
+		log.info("Service: " + service + " is created");
 		return serviceDao.persist(service);
 	}
 
 	@Override
 	public void delete(Service service) {
 		serviceDao.delete(service);
+		log.info("Service " + service + " is deleted");
 	}
 
 	@Override
 	public void update(Service service) {
 		serviceDao.update(service);
+		log.info("Service " + service + " is updated");
+
 	}
 
 }

@@ -8,50 +8,67 @@
   <name>phone-station Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+  	<junit.version>4.12</junit.version>
+  	<mysql.version>6.0.5</mysql.version>
+  	<apache.commons.version>2.0</apache.commons.version>
+  	<apache.tomcat.version>8.0.0-RC10</apache.tomcat.version>
+  	<mockito.version>1.10.19</mockito.version>
+  	<jstl.version>1.2</jstl.version>
+  	<log4j.version>1.2.17</log4j.version>
+  </properties>
+
   <dependencies>
 
-<!-- https://mvnrepository.com/artifact/junit/junit -->
-<dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <version>4.12</version>
-</dependency>
+	<!-- https://mvnrepository.com/artifact/junit/junit -->
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>${junit.version}</version>
+	</dependency>
 
 
 	<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 	<dependency>
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
-		<version>6.0.5</version>
+		<version>${mysql.version}</version>
 	</dependency>
 
 	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 	<dependency>
 		<groupId>org.apache.commons</groupId>
 		<artifactId>commons-dbcp2</artifactId>
-		<version>2.0</version>
+		<version>${apache.commons.version}</version>
 	</dependency>
 
 	<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-util -->
 	<dependency>
 		<groupId>org.apache.tomcat</groupId>
 		<artifactId>tomcat-util</artifactId>
-		<version>8.0.0-RC10</version>
+		<version>${apache.tomcat.version}</version>
 	</dependency>
 
-<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
-<dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>mockito-all</artifactId>
-    <version>1.10.19</version>
-</dependency>
+	<!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
+	<dependency>
+		<groupId>org.mockito</groupId>
+		<artifactId>mockito-all</artifactId>
+		<version>${mockito.version}</version>
+	</dependency>
 
-<!-- https://mvnrepository.com/artifact/jstl/jstl -->
-<dependency>
-    <groupId>jstl</groupId>
-    <artifactId>jstl</artifactId>
-    <version>1.2</version>
-</dependency>
+	<!-- https://mvnrepository.com/artifact/jstl/jstl -->
+	<dependency>
+		<groupId>jstl</groupId>
+		<artifactId>jstl</artifactId>
+		<version>${jstl.version}</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>${log4j.version}</version>
+	</dependency>
 
 
   </dependencies>

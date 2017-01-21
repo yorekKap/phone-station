@@ -12,6 +12,10 @@ import com.phone.station.dao.annotations.Table;
 import com.phone.station.dao.annotations.enums.DateType;
 import com.phone.station.entities.enums.Role;
 
+/**
+ * @author yuri
+ *
+ */
 @Table("users")
 public class User implements Identified<Long> {
 
@@ -146,6 +150,15 @@ public class User implements Identified<Long> {
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone
+				+ ", additionalPhone=" + additionalPhone + ", username=" + username + ", password=" + password
+				+ ", balance=" + balance + ", tariffId=" + tariffId + ", registrationDate=" + registrationDate
+				+ ", tariff=" + tariff + ", userRole=" + userRole + "]";
+	}
+
 
 
 }

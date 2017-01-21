@@ -7,9 +7,18 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.phone.station.exceptions.dao.MySQLUpdateException;
 
+/**
+ * Used for the {@code UPDATE} query bui
+ * 
+ * @author yuri
+ *
+ */
 public class UpdateQuery extends WhereQuery<UpdateQuery>{
+	private static final Logger log = Logger.getLogger(UpdateQuery.class);
 
 	private Connection connection;
 	private String tableName;
@@ -38,9 +47,11 @@ public class UpdateQuery extends WhereQuery<UpdateQuery>{
 				statement.setObject(i++, o);
 			}
 
+			log.info(statement.toString() + " Update statement executing");
 			return statement.executeUpdate();
 
 		}catch(SQLException e){
+			log.error("SQLException in UpdateQuery : ", e);
 			throw new MySQLUpdateException(e.getMessage());
 		}
 	}

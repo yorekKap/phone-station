@@ -8,9 +8,19 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
+
+/**
+ * Factory pattern realization for proper creation of DataSource objects
+ * from {@link InitialContext}
+ *
+ * @author yuri
+ *
+ */
 public class DataSourceFactory {
+	private static final Logger log = Logger.getLogger(DataSourceFactory.class);
 
 	public static final String MY_SQL = "mysql";
 
@@ -20,6 +30,7 @@ public class DataSourceFactory {
 		try {
 			initContext = new InitialContext();
 		} catch (NamingException e) {
+			log.error("", e);
 			e.printStackTrace();
 		}
 
@@ -28,7 +39,9 @@ public class DataSourceFactory {
 			DataSource ds = null;
 			try {
 				ds = (DataSource) initContext.lookup("java:comp/env/jdbc/phone_station");
+				log.info("MySQL DataSource is fetched from JNDI");
 			} catch (NamingException e) {
+				log.error("", e);
 				e.printStackTrace();
 			}
 
@@ -36,6 +49,8 @@ public class DataSourceFactory {
 		}
 
 		else{
+			log.error("Trying to get DataSource of database(" + dbType + "),"
+					+ " which is not specified in the factory");
 			throw new IllegalArgumentException("No such database template in factory");
 		}
 	}

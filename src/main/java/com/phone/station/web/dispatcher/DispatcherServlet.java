@@ -11,7 +11,10 @@ import org.apache.catalina.connector.Request;
 import com.phone.station.config.WebAppContext;
 
 /**
- * Servlet implementation class DispatcherServlet
+ * {@link HttpServlet} implementation for dispatching incoming
+ * request to mapped controller
+ *
+ * @author yuri
  */
 public class DispatcherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

@@ -12,8 +12,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import com.phone.station.config.WebAppContext;
-import com.phone.station.utils.LocaleResolver;
+import com.phone.station.web.resolvers.LocaleResolver;
 
+/**
+ * Filter that sets right locale based on the request parameter 
+ * or session attribute {@code lang}
+ *
+ * @author yuri
+ *
+ */
 public class LocaleFilter implements Filter {
 
 	private static final String LANG_PARAMETER = "lang";
@@ -38,19 +45,17 @@ public class LocaleFilter implements Filter {
 
 		String lang = httpRequest.getParameter(LANG_PARAMETER);
 		Locale locale = null;
+		
 		if (lang != null) {
 			locale = localeResolver.getLocale(lang);
-			httpRequest.getSession().setAttribute(LOCALE_ATTRIBUTE, locale);
 		}
 		else{
 			locale = (Locale)httpRequest.getSession().getAttribute(LOCALE_ATTRIBUTE);
-
 			if(locale == null){
 				locale = localeResolver.getDefaultLocale();
-				httpRequest.getSession().setAttribute(LOCALE_ATTRIBUTE, locale);
 			}
 		}
-
+		httpRequest.getSession().setAttribute(LOCALE_ATTRIBUTE, locale);
 		chain.doFilter(request, response);
 	}
 

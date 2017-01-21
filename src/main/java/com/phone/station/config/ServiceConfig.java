@@ -1,5 +1,8 @@
 package com.phone.station.config;
 
+
+import org.apache.log4j.Logger;
+
 import com.phone.station.dao.interfaces.PaymentDao;
 import com.phone.station.dao.interfaces.ServiceDao;
 import com.phone.station.dao.interfaces.TariffDao;
@@ -15,8 +18,19 @@ import com.phone.station.service.interfaces.ServicesService;
 import com.phone.station.service.interfaces.TariffService;
 import com.phone.station.service.interfaces.UserService;
 
+/**
+ * {@link Config} implementation for fulfilling components context
+ * with service implementations
+ *
+ * @author yuri
+ *
+ */
 public class ServiceConfig implements Config {
+		private static final Logger log = Logger.getLogger(ServiceConfig.class);
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void init(Components components) {
 		UserDao userDao = WebAppContext.get(UserDao.class);
@@ -29,6 +43,8 @@ public class ServiceConfig implements Config {
 				  .add(TariffService.class, new TariffServiceImpl(tariffDao))
 				  .add(ServicesService.class, new ServicesServiceImpl(serviceDao))
 				  .add(PaymentService.class, new PaymentServiceImpl(paymentDao, userDao));
+
+		log.info("Service components added");
 	}
 
 }

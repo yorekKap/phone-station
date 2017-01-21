@@ -1,4 +1,4 @@
-package com.phone.station.web.controllers;
+package com.phone.station.web.controllers.user;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

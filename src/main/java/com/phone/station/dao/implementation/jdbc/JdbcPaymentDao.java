@@ -14,35 +14,54 @@ import com.phone.station.dao.parsers.ObjectToColumnValueMapParser;
 import com.phone.station.dao.parsers.ResultSetParser;
 import com.phone.station.entities.Payment;
 
+
+/**
+ * DAO class for managing {@link Payment} entities
+ * 
+ * @author yuri
+ *
+ */
 public class JdbcPaymentDao extends AbstractJdbcDao<Payment, Long> implements PaymentDao{
-
-
+	
 	private static final String TABLE_NAME = "payments";
 
-	private static final String PK_COLUMN = "id";
-	private static final String USER_ID_COLUMN = "user_id";
-	private static final String DATE_COLUMN = "date";
+	private static final String PK_COLUMN = TABLE_NAME + ".id";
+	private static final String USER_ID_COLUMN = TABLE_NAME + ".user_id";
+	private static final String DATE_COLUMN =  TABLE_NAME + ".date";
 
 	public JdbcPaymentDao(DataSource dataSource) {
 		super(dataSource);
 	}
 
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Payment prepareResultSet(ResultSet rs) throws SQLException {
 		ResultSetParser parser = new ResultSetParser(rs);
 		return parser.parseResultSetToObject(Payment.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<String, Object> getValuesMap(Payment object) {
 		return ObjectToColumnValueMapParser.parse(object, Payment.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getTableName() {
 		return TABLE_NAME;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getPK() {
 		return PK_COLUMN;

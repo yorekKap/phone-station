@@ -12,14 +12,20 @@ import com.phone.station.dao.builder.SelectQuery;
 import com.phone.station.dao.interfaces.ServiceDao;
 import com.phone.station.dao.parsers.ObjectToColumnValueMapParser;
 import com.phone.station.dao.parsers.ResultSetParser;
+import com.phone.station.entities.Payment;
 import com.phone.station.entities.Service;
 import com.phone.station.entities.User;
 import com.phone.station.exceptions.dao.MySQLException;
 
+/**
+ * DAO class for managing {@link Service} entities
+ * 
+ * @author yuri
+ *
+ */
 public class JdbcServiceDao extends AbstractJdbcDao<Service, Long> implements ServiceDao{
 
 	private static final String TABLE_NAME = "services";
-
 
 	//for join request
 	private static final String JOIN_TABLE = "users_services";
@@ -29,39 +35,51 @@ public class JdbcServiceDao extends AbstractJdbcDao<Service, Long> implements Se
 	private static final String USERS_PK = USERS_TABLE + ".id";
 
 	//column names
-	private static final String PK_COLUMN = "services.id";
-	private static final String TITLE_COLUMN = "services.title";
-	private static final String COST_COLUMN = "services.cost";
-	private static final String DESCRIPTION_COLUMN = "services.description";
-
-
-
+	private static final String PK_COLUMN = TABLE_NAME + ".id";
+	private static final String TITLE_COLUMN = TABLE_NAME + ".title";
+	private static final String COST_COLUMN = TABLE_NAME + ".cost";
+	private static final String DESCRIPTION_COLUMN = TABLE_NAME +".description";
 
 	public JdbcServiceDao(DataSource dataSource) {
 		super(dataSource);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Service prepareResultSet(ResultSet rs) throws SQLException {
 		ResultSetParser parser = new ResultSetParser(rs);
 		return parser.parseResultSetToObject(Service.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<String, Object> getValuesMap(Service service) {
 		return ObjectToColumnValueMapParser.parse(service, Service.class);
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void provideInnerJoin(SelectQuery query) {
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getTableName() {
 		return TABLE_NAME;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getPK() {
 		return PK_COLUMN;

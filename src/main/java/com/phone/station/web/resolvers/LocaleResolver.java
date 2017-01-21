@@ -1,9 +1,18 @@
-package com.phone.station.utils;
+package com.phone.station.web.resolvers;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import com.phone.station.exceptions.builders.LocaleResolverBuildingException;
+
+
+/**
+ * Serve for getting the right locale.
+ *
+ * @author yuri
+ *
+ */
 public class LocaleResolver {
 
 	Map<String, Locale> locales;
@@ -19,10 +28,22 @@ public class LocaleResolver {
 		this.defaultLocale = defaultLocale;
 	}
 
+
+	/**
+	 * @return default {@link Locale}
+	 */
 	public Locale getDefaultLocale(){
 		return defaultLocale;
 	}
 
+
+	/**
+	 * Get locale based on the given {@code lang} parameter
+	 *
+	 * @param lang - language code
+	 * @return {@link Locale} for a given {@code lang} if there is
+	 * 			no such {@link Locale} - return default {@link Locale}
+	 */
 	public Locale getLocale(String lang) {
 		Locale locale = null;
 		locale = locales.get(lang);
@@ -34,10 +55,20 @@ public class LocaleResolver {
 		return locale;
 	}
 
+	/**
+	 * @return {@link LocaleResolverBuilder}
+	 */
 	public static LocaleResolverBuilder getBuilder() {
 		return new LocaleResolverBuilder();
 	}
 
+
+	/**
+	 * Class for convenient {@link LocaleResolver} building
+	 *
+	 * @author yuri
+	 *
+	 */
 	public static class LocaleResolverBuilder {
 
 		private Map<String, Locale> locales = new HashMap<>();
@@ -58,7 +89,7 @@ public class LocaleResolver {
 
 		public LocaleResolver createLocaleResolver(){
 			if(defaultLocale == null){
-				throw new RuntimeException("The default locale must be set in LocaleResolver");
+				throw new LocaleResolverBuildingException("The default locale must be set in LocaleResolver");
 			}
 
 			return new LocaleResolver(locales, defaultLocale);

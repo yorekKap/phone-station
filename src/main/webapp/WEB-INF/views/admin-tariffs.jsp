@@ -130,7 +130,7 @@
 						<input class = "form-control" type="text" id="costPerMonth" name="costPerMonth"
 							required="true"
 							placeholder="${cost_per_month}" value="${tariff.costPerMonth }"
-							pattern = "[1-9]\d+(\.\d+)?">
+							pattern = "[1-9]\d*(\.\d+)?">
 
 					<p class="contact">
 						<label for="minutesOfCallsInNetwork">${minutes_of_calls_in_network}</label>
@@ -213,7 +213,7 @@
 						<input class = "form-control" type="text" id="costPerMonth" name="costPerMonth"
 							required="true"
 							placeholder="${cost_per_month}"
-							pattern = "[1-9]\d+(\.\d+)?">
+							pattern = "[1-9]\d*(\.\d+)?">
 
 					<p class="contact">
 						<label for="minutesOfCallsInNetwork">${minutes_of_calls_in_network}</label>

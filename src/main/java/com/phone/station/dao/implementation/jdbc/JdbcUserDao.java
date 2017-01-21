@@ -13,10 +13,17 @@ import com.phone.station.dao.interfaces.TariffDao;
 import com.phone.station.dao.interfaces.UserDao;
 import com.phone.station.dao.parsers.ObjectToColumnValueMapParser;
 import com.phone.station.dao.parsers.ResultSetParser;
+import com.phone.station.entities.Payment;
 import com.phone.station.entities.Tariff;
 import com.phone.station.entities.User;
 import com.phone.station.entities.enums.Role;
 
+/**
+ * DAO class for managing {@link User} entities
+ *
+ * @author yuri
+ *
+ */
 public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 
 	private static final String TABLE_NAME = "users";
@@ -42,6 +49,9 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 		super(dataSource);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public User prepareResultSet(ResultSet rs) throws SQLException {
 		ResultSetParser parser = new ResultSetParser(rs);
@@ -55,21 +65,33 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 		return user;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Map<String, Object> getValuesMap(User object) {
 		return ObjectToColumnValueMapParser.parse(object, User.class);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getTableName() {
 		return TABLE_NAME;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String getPK() {
 		return PK_COLUMN;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void provideInnerJoin(SelectQuery query) {
 		query.leftJoin(TARRIF_TABLE).on(TARIFF_ID, TARIFF_PK);
