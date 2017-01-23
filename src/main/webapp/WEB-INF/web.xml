@@ -59,6 +59,11 @@
 		<url-pattern>/resources/*</url-pattern>
 	</servlet-mapping>
 
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/error-pages/error-page-404.jsp</location>
+	</error-page>
+
 	<resource-ref>
 		<res-ref-name>jdbc/phone_station</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
