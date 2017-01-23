@@ -1,18 +1,12 @@
 package com.phone.station.web.security;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.catalina.Session;
-
 import com.phone.station.entities.enums.Role;
 import com.phone.station.exceptions.builders.SecurityContextBuildingException;
-import com.phone.station.utils.ContextPathFetcher;
 
 
 /**

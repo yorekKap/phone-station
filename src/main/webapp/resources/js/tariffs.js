@@ -14,7 +14,7 @@ function chooseTariffModal(tariffName, tariffId){
 function chooseTariff(){
 	var mod = $("#choose-modal");
 	var tariffId = mod.data("choosen");
-	$.post("/tariffs", {id : tariffId}, function(){
+	$.post("/tariffs", {id : tariffId, action : "add-tariff"}, function(){
 		location.reload();
 	});
 }
@@ -26,9 +26,9 @@ function cancelTariffModal(){
 }
 
 function cancelTariff(){
-	$.get("/tariff-disconnect");
-	location.reload();
-
+	$.post("/tariffs", {action : "remove-tariff"}, function(){
+		location.reload();
+	});
 }
 
 $(document).ready(function(){

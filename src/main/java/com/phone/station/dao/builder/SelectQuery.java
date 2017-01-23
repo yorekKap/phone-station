@@ -126,7 +126,6 @@ public final class SelectQuery extends WhereQuery<SelectQuery>{
 		}
 
 		sqlBuilder.append(";");
-		System.out.println(sqlBuilder.toString());
 		return sqlBuilder.toString();
 	}
 }

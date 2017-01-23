@@ -41,7 +41,8 @@ public class ResultSetParser {
 	 * It's done with to provide join support
 	 * where the ambiguous column name is highly possible
 	 */
-	Map<String, Integer> columns = new HashMap<>();
+	private Map<String, Integer> columns = new HashMap<>();
+
 
 	public ResultSetParser(ResultSet rs){
 		this.rs = rs;
@@ -138,7 +139,7 @@ public class ResultSetParser {
 			}
 
 			if (field.getType().equals(Long.class) && value != null) {
-					value = new Long((Integer) value);
+					value = new Long((Integer)value);
 			}
 
 				field.set(obj, value);

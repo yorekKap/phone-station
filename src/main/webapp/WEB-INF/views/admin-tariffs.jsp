@@ -2,16 +2,19 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="utils" uri="mytags.com/utils" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="lang"/>
 
 
-<fmt:message key="tariff.calls-in-network" var="minutes_of_calls_in_network" />
-<fmt:message key="tariff.calls-out-of-network" var="minutes_of_calls_out_of_network" />
+<fmt:message key="tariff.calls-in-network" var="calls_in_network" />
+<fmt:message key="tariff.calls-out-of-network" var="calls_out_of_network" />
 <fmt:message key="tariff.internet-megabytes" var="internet_megabytes" />
 <fmt:message key="tariff.cost-per-month" var="cost_per_month" />
 <fmt:message key="tariff.choose-cancel" var="choose_cancel" />
 <fmt:message key="tariff.choose-ok" var="choose_ok" />
+<fmt:message key="tariff.mins" var = "mins"/>
+<fmt:message key="tariff.megabytes" var = "megabytes"/>
 
 <fmt:message key="admin.tariffs.title" var="title" />
 <fmt:message key="admin.tariffs.tariff-title" var="tariff_title" />
@@ -19,6 +22,8 @@
 <fmt:message key="admin.tariffs.delete" var="delete_tariff" />
 <fmt:message key="admin.tariffs.edit" var="edit_tariff" />
 <fmt:message key="admin.tariffs.create" var="create_tariff" />
+<fmt:message key="uah" var = "uah"/>
+
 
 
 
@@ -63,28 +68,28 @@
 									<tr>
 										<td>${tariff.title}</td>
 										<td>${tariff.description}</td>
-										<td>${tariff.costPerMonth}</td>
+										<td>${tariff.costPerMonth} <small>${uah}</small></td>
 
-										<c:if test = "${tariff.minutesOfCallsInNetwork < 0}">
-											<td>&infin;</td>
-										</c:if>
-										<c:if test = "${tariff.minutesOfCallsInNetwork >= 0}">
-											<td>${tariff.minutesOfCallsInNetwork}</td>
-										</c:if>
+										<td>
+										<utils:print ifTrue="${tariff.minutesOfCallsInNetwork < 0}"
+													 out = "&infin;"
+													 otherwise="${tariff.minutesOfCallsInNetwork}"/>
+													 <small>${mins }</small>
+										</td>
+										<td>
+										<utils:print ifTrue="${tariff.minutesOfCallsOutOfNetwork < 0}"
+													 out = "&infin;"
+													 otherwise="${tariff.minutesOfCallsOutOfNetwork}"/>
+													 <small>${mins}</small>
 
-										<c:if test = "${tariff.minutesOfCallsOutOfNetwork < 0}">
-											<td>&infin;</td>
-										</c:if>
-										<c:if test = "${tariff.minutesOfCallsOutOfNetwork >= 0}">
-											<td>${tariff.minutesOfCallsOutOfNetwork}</td>
-										</c:if>
+										</td>
 
-										<c:if test = "${tariff.internetMegabytes < 0}">
-											<td>&infin;</td>
-										</c:if>
-										<c:if test = "${tariff.internetMegabytes >= 0}">
-											<td>${tariff.internetMegabytes}</td>
-										</c:if>
+										<td>
+										<utils:print ifTrue="${tariff.internetMegabytes < 0}"
+													 out = "&infin;"
+													 otherwise="${tariff.internetMegabytes}"/>
+													 <small>${megabytes }</small>
+										</td>
 										<td>
 											<button data-tariff-id="${tariff.id}" type="button"
 											class="btn btn-default edit-button">
@@ -125,7 +130,7 @@
 						<textarea class = "form-control" id="description" name="description" rows="5" required="true"
 								 style = "width: 100%">${tariff.description }</textarea>
 					<p class="contact">
-						<label for="costPerMonth">${cost_per_month}</label>
+						<label for="costPerMonth">${cost_per_month} <small>(${uah})</small></label>
 					</p>
 						<input class = "form-control" type="text" id="costPerMonth" name="costPerMonth"
 							required="true"
@@ -133,26 +138,26 @@
 							pattern = "[1-9]\d*(\.\d+)?">
 
 					<p class="contact">
-						<label for="minutesOfCallsInNetwork">${minutes_of_calls_in_network}</label>
+						<label for="minutesOfCallsInNetwork">${calls_in_network} <small>(${mins})</small></label>
 					</p>
 						<input class = "form-control" type="text" id="minutesOfCallsInNetwork"
 							name="minutesOfCallsInNetwork"
 							required="true"
-							placeholder="${minutes_of_calls_in_network}"
+							placeholder="${calls_in_network}"
 							value="${tariff.minutesOfCallsInNetwork }"
 							pattern = "(0)|(-?[1-9]\d*)">
 					<p class="contact">
-						<label for="minutesOfCallsOutOfNetwork">${minutes_of_calls_out_of_network}</label>
+						<label for="minutesOfCallsOutOfNetwork">${calls_out_of_network} <small>(${mins})</small></label>
 					</p>
 						<input class = "form-control" type="text" id="minutesOfCallsOutOfNetwork"
 							name="minutesOfCallsOutOfNetwork"
 							required="true"
-							placeholder="${minutes_of_calls_out_of_network}"
+							placeholder="${calls_out_of_network}"
 							value="${tariff.minutesOfCallsOutOfNetwork }"
 							pattern = "(0)|(-?[1-9]\d*)">
 
 						<p class="contact">
-						<label for="internetMegabytes">${internet_megabytes}</label>
+						<label for="internetMegabytes">${internet_megabytes} <small>(${megabytes})</small></label>
 					</p>
 						<input class = "form-control" type="text" id="internetMegabytes"
 							name="internetMegabytes"
@@ -208,7 +213,7 @@
 						<textarea class = "form-control" id="description" name="description" rows="5" required="true"
 								 style = "width: 100%">${tariff.description }</textarea>
 										<p class="contact">
-						<label for="costPerMonth">${cost_per_month}</label>
+						<label for="costPerMonth">${cost_per_month} <small>(${uah})</small></label>
 					</p>
 						<input class = "form-control" type="text" id="costPerMonth" name="costPerMonth"
 							required="true"
@@ -216,24 +221,24 @@
 							pattern = "[1-9]\d*(\.\d+)?">
 
 					<p class="contact">
-						<label for="minutesOfCallsInNetwork">${minutes_of_calls_in_network}</label>
+						<label for="minutesOfCallsInNetwork">${calls_in_network} <small>(${mins})</small></label>
 					</p>
 						<input class = "form-control" type="text" id="minutesOfCallsInNetwork"
 							name="minutesOfCallsInNetwork"
 							required="true"
-							placeholder="${minutes_of_calls_in_network}"
+							placeholder="${calls_in_network}"
 							pattern = "(0)|(-?[1-9]\d*)">
 					<p class="contact">
-						<label for="minutesOfCallsOutOfNetwork">${minutes_of_calls_out_of_network}</label>
+						<label for="minutesOfCallsOutOfNetwork">${calls_out_of_network} <small>(${mins})</small></label>
 					</p>
 						<input class = "form-control" type="text" id="minutesOfCallsOutOfNetwork"
 							name="minutesOfCallsOutOfNetwork"
 							required="true"
-							placeholder="${minutes_of_calls_out_of_network}"
+							placeholder="${calls_out_of_network}"
 							pattern = "(0)|(-?[1-9]\d*)">
 
 						<p class="contact">
-						<label for="internetMegabytes">${internet_megabytes}</label>
+						<label for="internetMegabytes">${internet_megabytes} <small>(${megabytes})</small></label>
 					</p>
 						<input class = "form-control" type="text" id="internetMegabytes"
 							name="internetMegabytes"

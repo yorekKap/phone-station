@@ -10,6 +10,7 @@
             username="root"
             password="root"
             driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/phone_station?characterEncoding=utf-8"
+            url="jdbc:mysql://localhost:3306/phone_station?useSSL=false&amp;characterEncoding=utf-8"
+
     />
 </Context>

@@ -16,6 +16,8 @@
 <fmt:message key="home.phone" var = "phone"/>
 <fmt:message key="home.additional-phone" var = "additional_phone"/>
 <fmt:message key="home.tariff" var = "tariff"/>
+<fmt:message key="uah" var = "uah"/>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -72,7 +74,7 @@
 										<c:if test="${user.additionalPhone == null}">
 											<td>${no_additionalPhone}</td>
 										</c:if>
-										<td style="color:${color}">${user.balance}</td>
+										<td style="color:${color}">${user.balance} <small>${uah}</small></td>
 										<td>${user.registrationDate}</td>
 										<td>
 											<button data-uid="${user.id}" data-username = "${user.username}"

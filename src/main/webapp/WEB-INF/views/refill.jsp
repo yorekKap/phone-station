@@ -13,8 +13,8 @@
 <fmt:message key = "refill.cvv" var = "cvv"/>
 <fmt:message key = "refill.sum" var = "sum"/>
 <fmt:message key = "refill.refill" var = "refill"/>
-
-
+<fmt:message key = "refill.successful" var = "is_successful"/>
+<fmt:message key = "uah" var = "uah"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,6 +23,8 @@
 <title>${title }</title>
 </head>
 <body>
+	<input id = "successful" hidden data-successful = "${successful}" data-sum = "${refillSum}"></input>
+
 	<%@ include file="/resources/jspf/navbar.jspf" %>
   <div id="page-wrapper">
 		<div id="page-inner">
@@ -31,10 +33,7 @@
 					<h2>${title}</h2>
 				</div>
 			</div>
-
 	<div class="row">
-<!-- You can make it whatever width you want. I'm making it full width
-  on <= small devices and 4/12 page width on >= medium devices -->
   <div class="col-xs-12 col-md-6">
 
 
@@ -105,7 +104,7 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="form-group">
-                <label for="sum">${sum}</label>
+                <label for="sum">${sum}<small>(${uah})</small></label>
                 <input type="text"
                  id = "sum"
                  class="form-control"
@@ -133,12 +132,8 @@
 
   </div>
 
-
-
 </div>
 </div>
-
-
 
 		</div>
 		</div>

@@ -57,18 +57,18 @@ public class WebConfig implements Config {
 
 
 		ControllersMapper controllersMapper = ControllersMapper.createBuilder()
-				.add("/login", new LoginController(authService))
-				.add("/register", new RegisterController(userService)).add("/home", new HomeController(userService))
-				.add("/logout", new LogoutController())
-				.add("/tariffs", new TariffsController(tariffService, userService))
-				.add("/tariff-disconnect", new TariffDisconnectController(userService))
-				.add("/services", new ServiceController(servicesService, userService, paymentService))
-				.add("/payments", new PaymentsController(paymentService))
-				.add("/refill", new RefillController(paymentService))
-				.add("/admin", new AdminController(userService))
-				.add("/admin/users", new AdminUsersController(userService))
-				.add("/admin/services", new AdminServicesController(servicesService))
-				.add("/admin/tariffs", new AdminTariffsController(tariffService))
+				.add("/login",			   new LoginController(authService))
+				.add("/register", 	       new RegisterController(userService))
+				.add("/home", 			   new HomeController(userService))
+				.add("/logout", 		   new LogoutController())
+				.add("/tariffs", 		   new TariffsController(tariffService, userService))
+				.add("/services", 		   new ServiceController(servicesService, userService, paymentService))
+				.add("/payments", 		   new PaymentsController(paymentService))
+				.add("/refill",			   new RefillController(paymentService))
+				.add("/admin", 			   new AdminController(userService))
+				.add("/admin/users", 	   new AdminUsersController(userService))
+				.add("/admin/services",    new AdminServicesController(servicesService))
+				.add("/admin/tariffs", 	   new AdminTariffsController(tariffService))
 				.build();
 
 		log.info("ControllesMapper initialized");

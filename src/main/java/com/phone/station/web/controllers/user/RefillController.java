@@ -32,6 +32,8 @@ public class RefillController extends Controller {
 
 		paymentService.createPayment(sum, PAYMENT_TITLE, PAYMENT_DESCIPRTION + cardNumber, userId);
 
+		request.setAttribute("successful", true);
+		request.setAttribute("refillSum", sum);
 		return "refill";
 	}
 }

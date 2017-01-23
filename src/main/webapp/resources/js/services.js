@@ -7,7 +7,10 @@ $(document).ready(function(){
 
 	$("#additional-number-button").click(getAdditionalNumber)
 	$("#choose-ok-button").click(addService);
-	$("#exclusive-number-button").click(getExclusiveNumber)
+	$("#exclusive-number-button").click(getExclusiveNumber);
+	$(".remove-service-button").click(function(){
+		removeService($(this));
+	});
 
 
 });
@@ -46,10 +49,11 @@ function anyServiceAction(service, id){
 	$("#service-title").html(service);
 	mod.modal("show");
 }
+
 function addService(){
 	var id = $("#choose-ok-button").data("serviceid");
 	console.log(id);
-	$.post("/services", {serviceid : id}, function(){
+	$.post("/services", {serviceid : id, action : "add-service"}, function(){
 		location.reload();
 	});
 }
@@ -120,6 +124,18 @@ function getExclusiveNumber(){
 				mod.modal("hide");
 				alert("You have set your exclusive phone number!");
 			}
+		});
+	}
+}
+
+function removeService(button){
+	var title = button.data("title");
+	var id = button.data("serviceid");
+	var toProceed = confirm("Are you sure you want to remove service: " + title + " from your services");
+
+	if(toProceed){
+		$.post("/services", {serviceid : id, action : "remove-service"}, function(){
+			location.reload();
 		});
 	}
 }

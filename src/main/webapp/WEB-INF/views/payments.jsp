@@ -12,6 +12,7 @@
 <fmt:message key="payments.pay-price" var = "pay_price"/>
 <fmt:message key="payments.pay-date" var = "pay_date"/>
 <fmt:message key="payments.no-payments" var = "no_payments"/>
+<fmt:message key="uah" var = "uah"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -61,7 +62,7 @@
 
         <td>${payment.title}</td>
         <td>${payment.description}</td>
-        <td style="color:${color}">${payment.price}</td>
+        <td style="color:${color}">${payment.price} <small>${uah}</small></td>
         <td><fmt:formatDate type="both"
             value="${payment.date}" timeStyle="short" dateStyle="short" /></td>
       </tr>

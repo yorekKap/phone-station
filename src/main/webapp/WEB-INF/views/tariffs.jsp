@@ -19,6 +19,10 @@
 <fmt:message key="tariff.choose-ok" var = "choose_ok"/>
 <fmt:message key="tariff.disconnect" var = "disconnect"/>
 <fmt:message key="tariff.disconnect-question" var = "disconnect_question"/>
+<fmt:message key="tariff.mins" var = "mins"/>
+<fmt:message key="tariff.megabytes" var = "megabytes"/>
+<fmt:message key="uah" var = "uah"/>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -62,6 +66,7 @@
 												ifTrue="${user.tariff.minutesOfCallsInNetwork >= 0}"
 												out="${user.tariff.minutesOfCallsInNetwork}"
 												otherwise="&infin;" />
+												<small>${mins}</small>
 										</td>
 									</tr>
                                     <tr>
@@ -70,6 +75,7 @@
                                         <utils:print ifTrue="${user.tariff.minutesOfCallsOutOfNetwork >= 0}"
 													 out="${user.tariff.minutesOfCallsOutOfNetwork}"
 													 otherwise = "&infin;"/>
+													 <small>${mins}</small>
 										</td>
                                     </tr>
                                     <tr>
@@ -78,12 +84,14 @@
                                         <utils:print ifTrue="${user.tariff.internetMegabytes >= 0}"
 													 out="${user.tariff.internetMegabytes}"
 													 otherwise = "&infin;"/>
+													 <small>${megabytes}</small>
 										</td>
 										</tr>
 
                                     <tr>
                                         <td>${cost_per_month}</td>
-                                        <td>${tariff.costPerMonth}</td>
+                                        <td>${tariff.costPerMonth}
+                                        	<small>${uah}</small></td>
                                     </tr>
                                 </table>
 

@@ -16,6 +16,9 @@
 <fmt:message key="services.choose-service" var ="choose_service"/>
 <fmt:message key="services.choose-service-question" var ="choose_service_question"/>
 <fmt:message key="services.exclusive-number" var = "exclusive_number"/>
+<fmt:message key="services.remove-service" var = "remove_service"/>
+<fmt:message key="uah" var = "uah"/>
+
 
 
 
@@ -48,7 +51,7 @@
 						<div class="panel-body">
 							${service.description }
 							<br/>
-							${price} : ${service.cost}
+							${price} : ${service.cost} ${uah}
 						</div>
 						<div class="panel-footer">
 				  		  <button data-action = "${service.title}" data-serviceid = "${service.id}"
@@ -82,8 +85,15 @@
 						<div class="panel-body">
 							${service.description}
 						</div>
+						<div class="panel-footer">
+								<button data-title="${service.title}"
+									data-serviceid="${service.id}"
+									type="button" class="btn btn-default remove-service-button">
+									${remove_service}</button>
+							</div>
 					</div>
-				</div>
+						</div>
+
 			</div>
 			</c:forEach>
 			</c:if>

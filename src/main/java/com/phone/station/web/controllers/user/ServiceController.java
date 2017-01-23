@@ -16,8 +16,10 @@ import com.phone.station.web.dispatcher.Controller;
 
 public class ServiceController extends Controller{
 
-	private static final String ADDITIONAL_NUMBER_SERVICE = "additional-number";
-	private static final String EXCLUSIVE_NUMBER_SERVICE = "exclusive-number";
+	private static final String ADDITIONAL_NUMBER_SERVICE_ACTION = "additional-number";
+	private static final String EXCLUSIVE_NUMBER_SERVICE_ACTION = "exclusive-number";
+	private static final String ADD_SERVICE_ACTION = "add-service";
+	private static final String REMOVE_SERVICE_ACTION = "remove-service";
 	private static final String SERVICE_PAYMENT_DESCRIPTION = "Payment for service provided";
 
 	ServicesService servicesService;
@@ -45,26 +47,19 @@ public class ServiceController extends Controller{
 	@Override
 	public String post(HttpServletRequest request, HttpServletResponse response) {
 		String action = request.getParameter("action");
-		Long serviceId = Long.valueOf(request.getParameter("serviceid"));
-		Long userId = CurrentUserFetcher.getCurrentUserId(request);
 
-
-		if(action != null){
-			if(action.equals(ADDITIONAL_NUMBER_SERVICE)){
-				setAdditionalNumber(request, response);
-			}
-			else if(action.equals(EXCLUSIVE_NUMBER_SERVICE)){
-				setNewNumber(request, response);
-			}
+		if(action.equals(ADDITIONAL_NUMBER_SERVICE_ACTION)){
+			setAdditionalNumber(request, response);
 		}
-
-		else{
-			servicesService.addServiceToUser(serviceId, userId);
+		else if(action.equals(EXCLUSIVE_NUMBER_SERVICE_ACTION)){
+			setNewNumber(request, response);
 		}
-
-		Service service = servicesService.findById(serviceId);
-		paymentService.createPayment(service.getCost() * (-1), service.getTitle() + " service",
-									 SERVICE_PAYMENT_DESCRIPTION, userId);
+		else if(action.equals(ADD_SERVICE_ACTION)){
+			addService(request, response);
+		}
+		else if(action.equals(REMOVE_SERVICE_ACTION)){
+			removeService(request, response);
+		}
 		return null;
 	}
 
@@ -107,6 +102,26 @@ public class ServiceController extends Controller{
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void addService(HttpServletRequest request, HttpServletResponse response){
+		Long serviceId = Long.valueOf(request.getParameter("serviceid"));
+		Long userId = CurrentUserFetcher.getCurrentUserId(request);
+
+		servicesService.addServiceToUser(serviceId, userId);
+
+		Service service = servicesService.findById(serviceId);
+		paymentService.createPayment(service.getCost() * (-1), service.getTitle() + " service",
+								 SERVICE_PAYMENT_DESCRIPTION, userId);
+
+	}
+
+	private void removeService(HttpServletRequest request, HttpServletResponse response){
+		Long userId = CurrentUserFetcher.getCurrentUserId(request);
+		Long serviceId = Long.valueOf(request.getParameter("serviceid"));
+
+		servicesService.removeServiceFromUser(serviceId, userId);
+
 	}
 
 }

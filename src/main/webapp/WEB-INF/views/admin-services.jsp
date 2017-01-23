@@ -15,6 +15,8 @@
 <fmt:message key = "admin.services.delete" var = "delete_service"/>
 <fmt:message key = "admin.services.edit" var = "edit_service"/>
 <fmt:message key = "admin.services.create" var = "create_service"/>
+<fmt:message key="uah" var = "uah"/>
+
 
 
 
@@ -55,7 +57,7 @@
 									<tr>
 										<td class = "col-md-2">${service.title}</td>
 										<td class = "col-md-4">${service.description}</td>
-										<td class = "col-md-2">${service.cost}</td>
+										<td class = "col-md-2">${service.cost} <small>${uah}</small></td>
 										<td class = "col-md-2">
 											<button data-service-id="${service.id}" type="button"
 											class="btn btn-default edit-button">
@@ -96,7 +98,7 @@
 						<textarea class = "form-control" id="description" name="description" rows="5" required="true"
 								 style = "width: 100%">${service.description }</textarea>
 					<p class="contact">
-						<label for="cost">${cost}</label>
+						<label for="cost">${cost}<small>(${uah})</small></label>
 					</p>
 						<input class = "form-control" type="" id="cost" name="cost" required="true"
 							placeholder="${cost}" value="${service.cost }" pattern = "[1-9]\d+(\.\d+)?">
@@ -147,7 +149,7 @@
 						<textarea class = "form-control" id="description" name="description" rows="5" required="true"
 								 style = "width: 100%">${service.description }</textarea>
 					<p class="contact">
-						<label for="cost">${cost}</label>
+						<label for="cost">${cost}<small>(${uah})</small></label>
 					</p>
 						<input class = "form-control" type="" id="cost" name="cost" required="true"
 							placeholder="${cost}" pattern = "[1-9]\d+(\.\d+)?">

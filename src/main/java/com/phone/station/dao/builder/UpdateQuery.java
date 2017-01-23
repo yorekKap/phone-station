@@ -13,7 +13,7 @@ import com.phone.station.exceptions.dao.MySQLUpdateException;
 
 /**
  * Used for the {@code UPDATE} query bui
- * 
+ *
  * @author yuri
  *
  */
@@ -65,7 +65,6 @@ public class UpdateQuery extends WhereQuery<UpdateQuery>{
 
 		sqlBuilder.append( String.join(", ", columns) );
 		sqlBuilder.append(predicates.toString()).append(";");
-		System.out.println(sqlBuilder.toString());
 		return sqlBuilder.toString();
 	}
 }
