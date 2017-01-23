@@ -2,7 +2,6 @@ package com.phone.station.dao.implementation.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,14 +11,12 @@ import com.phone.station.dao.builder.SelectQuery;
 import com.phone.station.dao.interfaces.ServiceDao;
 import com.phone.station.dao.parsers.ObjectToColumnValueMapParser;
 import com.phone.station.dao.parsers.ResultSetParser;
-import com.phone.station.entities.Payment;
 import com.phone.station.entities.Service;
-import com.phone.station.entities.User;
 import com.phone.station.exceptions.dao.MySQLException;
 
 /**
  * DAO class for managing {@link Service} entities
- * 
+ *
  * @author yuri
  *
  */
@@ -38,7 +35,6 @@ public class JdbcServiceDao extends AbstractJdbcDao<Service, Long> implements Se
 	private static final String PK_COLUMN = TABLE_NAME + ".id";
 	private static final String TITLE_COLUMN = TABLE_NAME + ".title";
 	private static final String COST_COLUMN = TABLE_NAME + ".cost";
-	private static final String DESCRIPTION_COLUMN = TABLE_NAME +".description";
 
 	public JdbcServiceDao(DataSource dataSource) {
 		super(dataSource);

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.phone.station.utils.CurrentUserFetcher;
 import com.phone.station.web.dispatcher.Controller;
 import com.phone.station.web.security.UserPrincipal;
 

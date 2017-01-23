@@ -10,7 +10,6 @@ import com.phone.station.dao.builder.SelectQuery;
 import com.phone.station.dao.interfaces.TariffDao;
 import com.phone.station.dao.parsers.ObjectToColumnValueMapParser;
 import com.phone.station.dao.parsers.ResultSetParser;
-import com.phone.station.entities.Payment;
 import com.phone.station.entities.Tariff;
 
 /**
@@ -28,7 +27,6 @@ public class JdbcTariffDao extends AbstractJdbcDao<Tariff, Long> implements Tari
 	private static final String TITLE = "title";
 
 	private static final String USERS_TABLE = "users";
-	private static final String USERS_ID = USERS_TABLE + ".id";
 	private static final String USERS_TARIF_ID = USERS_TABLE + ".tariff_id";
 
 	public JdbcTariffDao(DataSource dataSource) {

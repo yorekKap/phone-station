@@ -1,15 +1,10 @@
 package com.phone.station.dao.factories;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 
 
 /**

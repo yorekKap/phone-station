@@ -97,7 +97,7 @@ public class ObjectToColumnValueMapParser {
 	 */
 	private static Object parseEnum(Field field, Object obj){
 		try {
-			Enum enumObject =  (Enum)field.get(obj);
+			Enum<?> enumObject =  (Enum<?>)field.get(obj);
 			return enumObject.name();
 		} catch (IllegalArgumentException | IllegalAccessException e) {
 			log.error("Exception in ObjectToColumnValueMapParser : ", e);

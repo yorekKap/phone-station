@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import com.phone.station.dao.annotations.Column;
 import com.phone.station.dao.annotations.ParseEnum;
 import com.phone.station.dao.annotations.Table;
-import com.sun.corba.se.impl.oa.toa.TOA;
 
 
 /**

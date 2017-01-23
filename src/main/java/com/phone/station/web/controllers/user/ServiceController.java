@@ -5,7 +5,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.phone.station.entities.Payment;
 import com.phone.station.entities.Service;
 import com.phone.station.entities.User;
 import com.phone.station.service.interfaces.PaymentService;

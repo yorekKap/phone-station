@@ -1,6 +1,5 @@
 package com.phone.station.dao.interfaces;
 
-import com.phone.station.entities.Service;
 import com.phone.station.entities.Tariff;
 
 /**

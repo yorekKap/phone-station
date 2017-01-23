@@ -17,12 +17,12 @@ import com.phone.station.entities.Payment;
 
 /**
  * DAO class for managing {@link Payment} entities
- * 
+ *
  * @author yuri
  *
  */
 public class JdbcPaymentDao extends AbstractJdbcDao<Payment, Long> implements PaymentDao{
-	
+
 	private static final String TABLE_NAME = "payments";
 
 	private static final String PK_COLUMN = TABLE_NAME + ".id";
@@ -33,7 +33,7 @@ public class JdbcPaymentDao extends AbstractJdbcDao<Payment, Long> implements Pa
 		super(dataSource);
 	}
 
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -83,7 +83,7 @@ public class JdbcPaymentDao extends AbstractJdbcDao<Payment, Long> implements Pa
 	@Override
 	public List<Payment> findByUserId(Long userId) {
 		return builder.select("*")
-					  .where("user_id")
+					  .where(USER_ID_COLUMN)
 					  .isEquals(userId)
 					  .execute(this::prepareResultSet);
 	}
@@ -91,7 +91,7 @@ public class JdbcPaymentDao extends AbstractJdbcDao<Payment, Long> implements Pa
 	@Override
 	public List<Payment> findByUserIdOrderedByDate(Long userId) {
 		return builder.select("*")
-				  .where("user_id")
+				  .where(USER_ID_COLUMN)
 				  .isEquals(userId)
 				  .orderBy(DATE_COLUMN, OrderingMode.DESC)
 				  .execute(this::prepareResultSet);

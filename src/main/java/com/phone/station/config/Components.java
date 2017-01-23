@@ -3,8 +3,6 @@ package com.phone.station.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.istack.internal.logging.Logger;
-
 /**
  *Serving as a components context
  *<p>

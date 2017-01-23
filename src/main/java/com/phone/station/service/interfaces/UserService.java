@@ -2,7 +2,6 @@ package com.phone.station.service.interfaces;
 
 import java.util.List;
 
-import com.phone.station.entities.Tariff;
 import com.phone.station.entities.User;
 import com.phone.station.entities.enums.Role;
 

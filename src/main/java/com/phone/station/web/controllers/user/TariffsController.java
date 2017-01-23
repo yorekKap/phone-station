@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.rowset.spi.SyncResolver;
 
 import com.phone.station.entities.Tariff;
 import com.phone.station.entities.User;

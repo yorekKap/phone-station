@@ -2,9 +2,7 @@ package com.phone.station.dao.interfaces;
 
 import java.util.List;
 
-import com.phone.station.entities.Payment;
 import com.phone.station.entities.Service;
-import com.phone.station.entities.User;
 
 
 /**

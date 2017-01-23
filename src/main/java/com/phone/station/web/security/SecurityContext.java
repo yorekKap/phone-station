@@ -19,8 +19,6 @@ import com.phone.station.exceptions.builders.SecurityContextBuildingException;
  */
 public class SecurityContext {
 
-	private static final String PRINCIPAL_ATTRIBUTE = "principal";
-
 	/**
 	 *Precise URL : Roles
 	 */

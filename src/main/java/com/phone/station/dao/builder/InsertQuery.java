@@ -3,8 +3,6 @@ package com.phone.station.dao.builder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,7 +15,7 @@ import com.phone.station.exceptions.dao.MySQLInsertException;
 
 /**
  *  Used for the {@code INSERT} query building
- * 
+ *
  * @author yuri
  *
  */

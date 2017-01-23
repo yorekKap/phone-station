@@ -2,18 +2,15 @@ package com.phone.station.dao.implementation.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
 import com.phone.station.dao.builder.SelectQuery;
-import com.phone.station.dao.interfaces.TariffDao;
 import com.phone.station.dao.interfaces.UserDao;
 import com.phone.station.dao.parsers.ObjectToColumnValueMapParser;
 import com.phone.station.dao.parsers.ResultSetParser;
-import com.phone.station.entities.Payment;
 import com.phone.station.entities.Tariff;
 import com.phone.station.entities.User;
 import com.phone.station.entities.enums.Role;

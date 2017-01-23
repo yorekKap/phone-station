@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.phone.station.entities.User;
 import com.phone.station.service.interfaces.UserService;
-import com.phone.station.utils.CurrentUserFetcher;
 import com.phone.station.web.dispatcher.Controller;
 import com.phone.station.web.security.UserPrincipal;
 
