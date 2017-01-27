@@ -50,16 +50,20 @@ public class SecurityConfig implements Config{
 	 */
 	private SecurityContext getSecurityContext(){
 		return SecurityContext.createBuilder()
-											  .forUrl(LOGIN).hasRole(Role.NOT_AUTHNENTICATED)
-											  .forUrl(REGISTER).hasRole(Role.NOT_AUTHNENTICATED)
-											  .forUrl(LOGOUT).hasRole(Role.ADMIN, Role.USER)
-											  .forMatch(RESOURCES_PATTERN).permitAll()
-											  .forMatch(ADMIN_PATTERN).hasRole(Role.ADMIN)
-											  .forAny().authenticated()
-											  .addRedirectUrlForRole(Role.NOT_AUTHNENTICATED, LOGIN)
-											  .addRedirectUrlForRole(Role.USER, HOME)
-											  .addRedirectUrlForRole(Role.ADMIN, ADMIN)
-											  .setDefaultRedirectUrl(WELCOME)
-											  .build();
+						      //rules for urls
+						      .forUrl(LOGIN).hasRole(Role.NOT_AUTHNENTICATED)
+						      .forUrl(REGISTER).hasRole(Role.NOT_AUTHNENTICATED)
+						      .forUrl(LOGOUT).hasRole(Role.ADMIN, Role.USER)
+						      //rules for patterns 
+						      .forMatch(RESOURCES_PATTERN).permitAll()
+						      .forMatch(ADMIN_PATTERN).hasRole(Role.ADMIN)
+						      //rules for any other
+						      .forAny().authenticated()
+						      //redirect rules
+						      .addRedirectUrlForRole(Role.NOT_AUTHNENTICATED, LOGIN)
+						      .addRedirectUrlForRole(Role.USER, HOME)
+						      .addRedirectUrlForRole(Role.ADMIN, ADMIN)
+						      .setDefaultRedirectUrl(WELCOME)
+						      .build();
 	}
 }
