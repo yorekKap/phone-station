@@ -20,6 +20,7 @@ public class AdminUsersController extends Controller{
 
 	private static final String USERS_URL = "admin-users";
 
+	private static final String PAGE_INDEX = "page-index";
 
 	UserService userService;
 
@@ -29,8 +30,15 @@ public class AdminUsersController extends Controller{
 
 	@Override
 	public String get(HttpServletRequest request, HttpServletResponse response) {
-		List<User> users = userService.findAllWithRole(Role.USER);
-		request.setAttribute(USERS_ATTRIBUTE, users);
+		String pageIndexStr = request.getParameter(PAGE_INDEX);
+		int pageIndex = 1;
+		if(pageIndexStr != null){
+			pageIndex = Integer.valueOf(pageIndexStr);
+		}
+
+		request.setAttribute(USERS_ATTRIBUTE, userService.findAllWithRoleAndPageIndex(Role.USER, pageIndex));
+		request.setAttribute("pageIndex", pageIndex);
+		request.setAttribute("numOfPages", userService.getNumOfPages());
 		return USERS_URL;
 
 	}

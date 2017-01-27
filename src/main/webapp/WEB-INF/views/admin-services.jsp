@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="png" uri="mytags.com/pagination" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="lang"/>
 
@@ -165,7 +166,22 @@
 </div>
 </div>
 
+	<png:setPageIndexesList numOfPages="${numOfPages}" numOfPageIndexes="5" index="${pageIndex}" list = "indexes"/>
 
+	<ul class = "pagination">
+	<li><a href = "/admin/services?page-index=1"><<</a></li>
+	<c:forEach items="${indexes}" var = "index">
+		<c:choose>
+		<c:when test="${index eq pageIndex}">
+			<li class = "active"><a href = "/admin/services?page-index=${index}">${index}</a><li>
+		</c:when>
+		<c:otherwise>
+			<li><a href = "/admin/services?page-index=${index}">${index}</a><li>
+		</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	<li><a href = "/admin/services?page-index=${numOfPages}">>></a></li>
+	</ul>
 				</div>
 			</div>
 

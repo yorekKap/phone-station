@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
- <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="pgn" uri = "mytags.com/pagination" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="lang"/>
 
@@ -71,6 +72,22 @@
   </table>
   </c:if>
 
+	<pgn:setPageIndexesList numOfPages="${numOfPages}" numOfPageIndexes="10" index="${pageIndex}" list="indexes"/>
+
+	<ul class = "pagination">
+	<li><a href = "/payments?page-index=1"><<</a></li>
+	<c:forEach items="${indexes}" var = "index">
+		<c:choose>
+		<c:when test="${index eq pageIndex}">
+			<li class = "active"><a href = "/payments?page-index=${index}">${index}</a><li>
+		</c:when>
+		<c:otherwise>
+			<li><a href = "/payments?page-index=${index}">${index}</a><li>
+		</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	<li><a href = "/payments?page-index=${numOfPages}">>></a></li>
+	</ul>
 		</div>
 		</div>
 

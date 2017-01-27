@@ -12,17 +12,20 @@ import java.util.List;
  * @param <T> entity type that this dao operates on
  * @param <K> primary key type
  */
-public interface GenericDao<T, K> {
+public interface GenericDao<T, K>{
 
 	boolean persist(T object);
 
 	T findByPK(K id);
-	
+
 	List<T> findAll();
-	
+
+	List<T> findAll(int offset, int limit);
+
 	void update(T object);
-	
+
 	void delete(T object);
 
+	int getNumOfRecords();
 
 }

@@ -62,13 +62,6 @@ public class JdbcServiceDao extends AbstractJdbcDao<Service, Long> implements Se
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void provideInnerJoin(SelectQuery query) {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public String getTableName() {
 		return TABLE_NAME;
 	}
@@ -80,6 +73,21 @@ public class JdbcServiceDao extends AbstractJdbcDao<Service, Long> implements Se
 	public String getPK() {
 		return PK_COLUMN;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void provideInnerJoin(SelectQuery query) {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void provideOrdering(SelectQuery query) {
+	}
+
 
 	@Override
 	public void delete(Service object) {
@@ -162,4 +170,5 @@ public class JdbcServiceDao extends AbstractJdbcDao<Service, Long> implements Se
 		return true;
 	}
 
-	}
+
+}

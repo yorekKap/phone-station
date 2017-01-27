@@ -2,6 +2,7 @@ package com.phone.station.dao.implementation.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -54,18 +55,10 @@ public class JdbcTariffDao extends AbstractJdbcDao<Tariff, Long> implements Tari
 		return ObjectToColumnValueMapParser.parse(object, Tariff.class);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-
-	@Override
-	public void provideInnerJoin(SelectQuery query) {
-	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-
 	@Override
 	public String getTableName() {
 		return TABLE_NAME;
@@ -74,10 +67,20 @@ public class JdbcTariffDao extends AbstractJdbcDao<Tariff, Long> implements Tari
 	/**
 	 * {@inheritDoc}
 	 */
-
 	@Override
 	public String getPK() {
 		return PK_COLUMN;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void provideInnerJoin(SelectQuery query) {
+	}
+
+	@Override
+	public void provideOrdering(SelectQuery query) {
 	}
 
 	@Override
@@ -99,7 +102,6 @@ public class JdbcTariffDao extends AbstractJdbcDao<Tariff, Long> implements Tari
 		return builder.select("*")
 					  .where(TITLE).isEquals(title)
 					  .executeForSingle(this::prepareResultSet);
-
 	}
 
 }

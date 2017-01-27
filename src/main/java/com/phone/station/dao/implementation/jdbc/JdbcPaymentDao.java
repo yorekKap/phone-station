@@ -68,16 +68,21 @@ public class JdbcPaymentDao extends AbstractJdbcDao<Payment, Long> implements Pa
 	}
 
 	@Override
+	public void provideInnerJoin(SelectQuery query) {
+	}
+
+	@Override
+	public void provideOrdering(SelectQuery query) {
+		query.orderBy(DATE_COLUMN, OrderingMode.DESC);
+	}
+
+	@Override
 	public void delete(Payment object) {
 		builder.delete()
 		   .from(getTableName())
 		   .where(getPK()).isEquals(object.getId())
 		   .execute();
 
-	}
-
-	@Override
-	public void provideInnerJoin(SelectQuery query) {
 	}
 
 	@Override
@@ -98,10 +103,28 @@ public class JdbcPaymentDao extends AbstractJdbcDao<Payment, Long> implements Pa
 	}
 
 	@Override
+	public List<Payment> findByUserIdOrderedByDate(Long userId, int offset, int limit) {
+		return builder.select("*")
+				  .where(USER_ID_COLUMN)
+				  .isEquals(userId)
+				  .orderBy(DATE_COLUMN, OrderingMode.DESC)
+				  .limit(offset, limit)
+				  .execute(this::prepareResultSet);
+
+	}
+
+	@Override
 	public List<Payment> findAllOrderedByDate() {
 		return builder.select("*")
 					  .orderBy(DATE_COLUMN, OrderingMode.DESC)
 					  .execute(this::prepareResultSet);
 	}
 
+	@Override
+	public int getNumOfRecordsWithUserId(Long userId) {
+		return builder.select("count(*)")
+					  .where(USER_ID_COLUMN)
+					  .isEquals(userId)
+					  .executeForSingle(rs -> rs.getInt(1));
+	}
 }

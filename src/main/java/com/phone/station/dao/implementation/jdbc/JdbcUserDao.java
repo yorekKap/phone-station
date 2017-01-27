@@ -94,6 +94,13 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 		query.leftJoin(TARRIF_TABLE).on(TARIFF_ID, TARIFF_PK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void provideOrdering(SelectQuery query) {
+	}
+
 	@Override
 	public void delete(User object) {
 
@@ -137,4 +144,14 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 				.execute(this::prepareResultSet);
 	}
 
+	@Override
+	public List<User> findAllWithRole(Role role, int offset, int limit) {
+		return builder.select("*")
+				.leftJoin(TARRIF_TABLE)
+				.on(TARIFF_ID, TARIFF_PK)
+				.where(USER_ROLE).isEquals(role.name())
+				.limit(offset, limit)
+				.execute(this::prepareResultSet);
+
+	}
 }

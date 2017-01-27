@@ -19,5 +19,6 @@ public interface UserDao extends GenericDao<User, Long> {
 
 	List<User> findAllWithRole(Role role);
 
+	List<User> findAllWithRole(Role role, int offset, int limit);
 
 }

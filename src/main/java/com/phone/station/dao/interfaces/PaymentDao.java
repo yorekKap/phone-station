@@ -15,6 +15,12 @@ public interface PaymentDao extends GenericDao<Payment, Long>{
 	List<Payment> findByUserId(Long userId);
 
 	List<Payment> findByUserIdOrderedByDate(Long userId);
-	
+
+	List<Payment> findByUserIdOrderedByDate(Long userId, int offset, int limit);
+
 	List<Payment> findAllOrderedByDate();
+
+	int getNumOfRecordsWithUserId(Long userId);
+
+
 }

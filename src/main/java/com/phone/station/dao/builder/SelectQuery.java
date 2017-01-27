@@ -5,11 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 
 import com.phone.station.exceptions.dao.MySQLException;
+import com.sun.org.apache.bcel.internal.generic.Select;
 
 /**
  * Used for the {@code SELECT} query building
@@ -25,6 +28,7 @@ public final class SelectQuery extends WhereQuery<SelectQuery>{
 	private String orderByColumn;
 	private String[] columnNames;
 	private StringBuilder join = new StringBuilder();
+	private int limit[];
 
 	protected SelectQuery(Connection connection, String[] columnNames, String tableName) {
 		super(SelectQuery.class);
@@ -60,6 +64,19 @@ public final class SelectQuery extends WhereQuery<SelectQuery>{
 
 	public SelectQuery orderBy(String orderByColumn, String orderMode){
 		this.orderByColumn = orderByColumn + " " + orderMode;
+		return this;
+	}
+
+	public SelectQuery limit(int numOfRows){
+		this.limit = new int[1];
+		this.limit[0] = numOfRows;
+		return this;
+	}
+
+	public SelectQuery limit(int offset, int numOfRows){
+		this.limit = new int[2];
+		this.limit[0] = offset;
+		this.limit[1] = numOfRows;
 		return this;
 	}
 
@@ -123,6 +140,13 @@ public final class SelectQuery extends WhereQuery<SelectQuery>{
 		if(orderByColumn != null){
 			sqlBuilder.append(" ORDER BY ")
 					  .append(orderByColumn);
+		}
+
+		if(limit != null){
+			sqlBuilder.append(" LIMIT ")
+					  .append(Arrays.stream(limit)
+									.mapToObj(i -> String.valueOf(i))
+									.collect(Collectors.joining(", ")));
 		}
 
 		sqlBuilder.append(";");

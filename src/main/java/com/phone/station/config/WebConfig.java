@@ -38,7 +38,8 @@ public class WebConfig implements Config {
 	 */
 	@Override
 	public void init(Components components) {
-		components.add(ControllersMapper.class, getControllersMapper()).add(ViewResolver.class, getViewResolver())
+		components.add(ControllersMapper.class, getControllersMapper())
+				  .add(ViewResolver.class, getViewResolver())
 				  .add(RequestHelper.class, getRequestHelper(getControllersMapper()));
 
 	}

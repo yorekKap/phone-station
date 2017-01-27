@@ -24,6 +24,11 @@ public interface PaymentService {
 	 * @return true if {@link Payment} is created properly, else - false
 	 */
 	boolean createPayment(Double price, String title, String description,  Long userId);
+
 	List<Payment> findByUserId(Long userId);
+
+	List<Payment> findByUserIdAndPageIndex(Long userId, int pageIndex);
+
+	int getNumOfPagesWithUserId(Long userId);
 }
 

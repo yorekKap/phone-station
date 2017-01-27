@@ -8,14 +8,19 @@ import com.phone.station.dao.interfaces.UserDao;
 import com.phone.station.entities.User;
 import com.phone.station.entities.enums.Role;
 import com.phone.station.service.interfaces.UserService;
+import com.phone.station.web.paginator.Paginator;
 
 public class UserServiceImpl implements UserService{
 	private static final Logger log = Logger.getLogger(UserServiceImpl.class);
 
+	private static final int NUM_OF_RECORDS_PER_PAGE = 5;
+
 	UserDao userDao;
+	Paginator<User> paginator;
 
 	public UserServiceImpl(UserDao userDao) {
 		this.userDao = userDao;
+		paginator = new Paginator<>(NUM_OF_RECORDS_PER_PAGE);
 	}
 
 
@@ -67,11 +72,25 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public List<User> findAllWithRoleAndPageIndex(Role role, int pageIndex) {
+		return paginator.findPage(pageIndex, (offset, limit) -> userDao.findAllWithRole(role, offset, limit));
+	}
+
+	@Override
 	public void delete(User user) {
 		userDao.delete(user);
 		log.info("User " + user + " is deleted");
 
 	}
 
+	@Override
+	public List<User> findByPageIndex(int index) {
+		return paginator.findPage(index, (offset, limit) -> userDao.findAll(offset, limit));
+	}
+
+	@Override
+	public int getNumOfPages() {
+		return paginator.getNumOfPages(userDao.getNumOfRecords());
+	}
 
 }

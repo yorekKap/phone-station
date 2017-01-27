@@ -68,6 +68,15 @@ public abstract class AbstractJdbcDao<T extends Identified<Long>, K extends Numb
 	 */
 	public abstract void provideInnerJoin(SelectQuery query);
 
+
+	/**
+	 * Provide default select query with ordering(if necessary)
+	 *
+	 * @param query that should be provided with ordering
+	 */
+
+	public abstract void provideOrdering(SelectQuery query);
+
 	/**
 	 * Main builder for all queries
 	 */
@@ -103,7 +112,19 @@ public abstract class AbstractJdbcDao<T extends Identified<Long>, K extends Numb
 		SelectQuery query = builder.select("*")
 						   .from(getTableName());
 		provideInnerJoin(query);
+		provideOrdering(query);
+
 		return query.execute(this::prepareResultSet);
+	}
+
+	@Override
+	public List<T> findAll(int offset, int limit) {
+		SelectQuery query = builder.select("*")
+							 	   .from(getTableName());
+		provideInnerJoin(query);
+		provideOrdering(query);
+		return query.limit(offset, limit).execute(this::prepareResultSet);
+
 	}
 
 	@Override
@@ -114,6 +135,11 @@ public abstract class AbstractJdbcDao<T extends Identified<Long>, K extends Numb
 					.execute();
 	}
 
-
+	@Override
+	public int getNumOfRecords() {
+		return builder.select("count(*)")
+					  .from(getTableName())
+					  .executeForSingle(rs -> rs.getInt(1));
+	}
 
 }

@@ -5,17 +5,14 @@ import java.util.List;
 import com.phone.station.entities.Service;
 import com.phone.station.entities.User;
 
-
-
 /**
- * Business layer API for convenient support of operations
- * with {@link Service} entity.
+ * Business layer API for convenient support of operations with {@link Service}
+ * entity.
  *
  * @author yuri
  *
  */
 public interface ServicesService {
-
 
 	/**
 	 * Find service by it's id
@@ -35,18 +32,22 @@ public interface ServicesService {
 	/**
 	 * Add {@link Service} to {@link User} by id
 	 *
-	 * @param serviceId - id of {@link Service} to be added
-	 * @param userId - id of {@link User} to whom {@link Service} should be added
+	 * @param serviceId
+	 *            - id of {@link Service} to be added
+	 * @param userId
+	 *            - id of {@link User} to whom {@link Service} should be added
 	 * @return true if operation was done right, false otherwise
 	 */
 	boolean addServiceToUser(Long serviceId, Long userId);
 
-
 	/**
 	 * Remove {@link Service} with given id from user
 	 *
-	 * @param serviceId - id of {@link Service} to be deleted
-	 * @param userId - id of {@link User} from whom {@link Service} should be deleted
+	 * @param serviceId
+	 *            - id of {@link Service} to be deleted
+	 * @param userId
+	 *            - id of {@link User} from whom {@link Service} should be
+	 *            deleted
 	 * @return true if operation was done right, false otherwise
 	 */
 	boolean removeServiceFromUser(Long serviceId, Long userId);
@@ -54,7 +55,8 @@ public interface ServicesService {
 	/**
 	 * Find all {@link User} of particular {@link User}
 	 *
-	 * @param userId - id of {@link User}
+	 * @param userId
+	 *            - id of {@link User}
 	 * @return {@link List} of found {@link User}
 	 */
 	List<Service> findAllOfUser(Long userId);
@@ -62,11 +64,11 @@ public interface ServicesService {
 	/**
 	 * Find all {@link User} not of particular {@link User}
 	 *
-	 * @param userId - id of {@link User}
+	 * @param userId
+	 *            - id of {@link User}
 	 * @return {@link List} of found {@link User}
 	 */
 	List<Service> findAllNotOfUser(Long userId);
-
 
 	/**
 	 * Create {@link User} based on given values
@@ -91,4 +93,18 @@ public interface ServicesService {
 	 * @param service {@link Service} to update
 	 */
 	void update(Service service);
+
+	/**
+	 * Find {@link Service} from given page
+	 *
+	 * @param index - index of page
+	 *
+	 * @return {@link List} of {@link Service}
+	 */
+	List<Service> findByPageIndex(int index);
+
+	/**
+	 * @return number of pages
+	 */
+	int getNumOfPages();
 }

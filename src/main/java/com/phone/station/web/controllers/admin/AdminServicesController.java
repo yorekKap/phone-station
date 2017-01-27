@@ -20,6 +20,8 @@ public class AdminServicesController extends Controller {
 
 	private static final String FAIL = "fail";
 
+	private static final String PAGE_INDEX = "page-index";
+
 	ServicesService serviceService;
 
 	public AdminServicesController(ServicesService serviceService) {
@@ -28,7 +30,15 @@ public class AdminServicesController extends Controller {
 
 	@Override
 	public String get(HttpServletRequest request, HttpServletResponse response) {
-		request.setAttribute("services", serviceService.findAll());
+		String pageIndexStr = request.getParameter(PAGE_INDEX);
+		int pageIndex = 1;
+		if(pageIndexStr != null){
+			pageIndex = Integer.valueOf(pageIndexStr);
+		}
+
+		request.setAttribute("services", serviceService.findByPageIndex(pageIndex));
+		request.setAttribute("pageIndex", pageIndex);
+		request.setAttribute("numOfPages", serviceService.getNumOfPages());
 		return ADMIN_SERVICES_URL;
 	}
 

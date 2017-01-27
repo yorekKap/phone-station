@@ -63,6 +63,7 @@ public class ServiceController extends Controller{
 	}
 
 	private void setAdditionalNumber(HttpServletRequest request, HttpServletResponse response) {
+		Long serviceId = Long.valueOf(request.getParameter("serviceid"));
 		User user =  CurrentUserFetcher.getCurrentUser(request);
 		String additionalPhone = request.getParameter("number");
 
@@ -70,7 +71,10 @@ public class ServiceController extends Controller{
 		if(testUser == null){
 			user.setAdditionalPhone(additionalPhone);
 			userService.update(user);
-		}
+			Service service = servicesService.findById(serviceId);
+			paymentService.createPayment(service.getCost() * (-1), service.getTitle() + " service",
+									 SERVICE_PAYMENT_DESCRIPTION, user.getId());
+			}
 
 		else{
 			try {
@@ -84,6 +88,7 @@ public class ServiceController extends Controller{
 	}
 
 	private void setNewNumber(HttpServletRequest request, HttpServletResponse response) {
+		Long serviceId = Long.valueOf(request.getParameter("serviceid"));
 		User user =  CurrentUserFetcher.getCurrentUser(request);
 		String newPhone = request.getParameter("number");
 
@@ -91,6 +96,9 @@ public class ServiceController extends Controller{
 		if(testUser == null){
 			user.setPhone(newPhone);
 			userService.update(user);
+			Service service = servicesService.findById(serviceId);
+			paymentService.createPayment(service.getCost() * (-1), service.getTitle() + " service",
+									 SERVICE_PAYMENT_DESCRIPTION, user.getId());
 		}
 
 		else{
