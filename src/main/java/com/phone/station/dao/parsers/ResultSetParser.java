@@ -23,10 +23,6 @@ import com.phone.station.dao.annotations.Table;
  * @author yuri
  *
  */
-/**
- * @author yuri
- *
- */
 
 public class ResultSetParser {
 	private static final Logger log = Logger.getLogger(ResultSetParser.class);

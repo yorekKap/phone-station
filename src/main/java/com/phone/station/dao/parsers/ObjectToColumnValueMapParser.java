@@ -13,7 +13,7 @@ import com.phone.station.dao.annotations.Id;
 
 
 /**
- * Based on the annotations {@link Column}, {@link Table}, {@link Column}
+ * Based on the annotations {@link Column}, {@link Table},
  * {@link DateSQL}, {@link Id}, {@link ParseEnum} parse object to map of
  * columns / values
  *
