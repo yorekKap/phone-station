@@ -71,7 +71,7 @@ public class SecurityContext {
 	 * @param role
 	 * @return true if access can be acquired, false otherwise
 	 */
-	public boolean hasAcces(String url, Role role){
+	public boolean hasAccess(String url, Role role){
 		List<Role> rolesRequired;
 		if((rolesRequired = urls.get(url)) != null){
 			return checkRole(rolesRequired, role);

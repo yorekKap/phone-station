@@ -15,21 +15,14 @@
 <tag-class>com.phone.station.tag.SetListOfPageIndexesTag</tag-class>
 <body-content>empty</body-content>
 <attribute>
-	<name>numOfPages</name>
+	<name>page</name>
 	<required>true</required>
 	<rtexprvalue>true</rtexprvalue>
-	<type>java.lang.Integer</type>
+	<type>com.phone.station.web.pagination.PageInfo</type>
 </attribute>
-
 <attribute>
 	<name>numOfPageIndexes</name>
 	<required>false</required>
-	<rtexprvalue>true</rtexprvalue>
-	<type>java.lang.Integer</type>
-</attribute>
-<attribute>
-	<name>index</name>
-	<required>true</required>
 	<rtexprvalue>true</rtexprvalue>
 	<type>java.lang.Integer</type>
 </attribute>

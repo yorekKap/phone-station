@@ -14,7 +14,7 @@ import com.phone.station.web.security.UserPrincipal;
  * Allow to get current {@link User} based on the {@code username} of the
  * {@link UserPrincipal} from {@link Session} of {@link HttpServletRequest}
  * <p>
- * The asnwer to question "Why can't we just store {@link User} in {@link Session}?"
+ * The answer to question "Why can't we just store {@link User} in {@link Session}?"
  * is because of cache aging.
  *
  * @author yuri

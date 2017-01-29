@@ -121,7 +121,7 @@ public class JdbcPaymentDao extends AbstractJdbcDao<Payment, Long> implements Pa
 	}
 
 	@Override
-	public int getNumOfRecordsWithUserId(Long userId) {
+	public int getNumOfPaymentsWithUserId(Long userId) {
 		return builder.select("count(*)")
 					  .where(USER_ID_COLUMN)
 					  .isEquals(userId)

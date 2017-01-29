@@ -7,19 +7,14 @@ import org.apache.log4j.Logger;
 import com.phone.station.dao.interfaces.ServiceDao;
 import com.phone.station.entities.Service;
 import com.phone.station.service.interfaces.ServicesService;
-import com.phone.station.web.paginator.Paginator;
 
 public class ServicesServiceImpl implements ServicesService{
 	private static final Logger log = Logger.getLogger(ServicesServiceImpl.class);
 
-	private static int NUM_OF_RECORDS_PER_PAGE = 10;
-
 	ServiceDao serviceDao;
-	Paginator<Service> servicePaginator;
 
 	public ServicesServiceImpl(ServiceDao serviceDao) {
 		this.serviceDao = serviceDao;
-		this.servicePaginator = new Paginator<>(NUM_OF_RECORDS_PER_PAGE);
 	}
 
 	@Override
@@ -31,6 +26,11 @@ public class ServicesServiceImpl implements ServicesService{
 	@Override
 	public List<Service> findAll() {
 		return serviceDao.findAll();
+	}
+
+	@Override
+	public List<Service> findAll(int offset, int limit) {
+		return serviceDao.findAll(offset, limit);
 	}
 
 	@Override
@@ -80,14 +80,8 @@ public class ServicesServiceImpl implements ServicesService{
 	}
 
 	@Override
-	public List<Service> findByPageIndex(int index) {
-		return servicePaginator.findPage(index, (offset, limit) -> serviceDao.findAll(offset, limit));
+	public int getNumOfRecords() {
+		return serviceDao.getNumOfRecords();
 	}
-
-	@Override
-	public int getNumOfPages(){
-		return servicePaginator.getNumOfPages(serviceDao.getNumOfRecords());
-	}
-
 
 }

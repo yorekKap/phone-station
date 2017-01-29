@@ -24,6 +24,8 @@
 </head>
 <body>
 
+	<c:set var = "payments" value = "${paymentPage.records}"/>
+
 	<%@ include file="/resources/jspf/navbar.jspf" %>
   <div id="page-wrapper">
 		<div id="page-inner">
@@ -72,13 +74,13 @@
   </table>
   </c:if>
 
-	<pgn:setPageIndexesList numOfPages="${numOfPages}" numOfPageIndexes="10" index="${pageIndex}" list="indexes"/>
+	<pgn:setPageIndexesList page = "${paymentPage}" numOfPageIndexes="3" list="indexes"/>
 
 	<ul class = "pagination">
 	<li><a href = "/payments?page-index=1"><<</a></li>
 	<c:forEach items="${indexes}" var = "index">
 		<c:choose>
-		<c:when test="${index eq pageIndex}">
+		<c:when test="${index eq paymentPage.pageIndex}">
 			<li class = "active"><a href = "/payments?page-index=${index}">${index}</a><li>
 		</c:when>
 		<c:otherwise>
@@ -86,7 +88,7 @@
 		</c:otherwise>
 		</c:choose>
 	</c:forEach>
-	<li><a href = "/payments?page-index=${numOfPages}">>></a></li>
+	<li><a href = "/payments?page-index=${paymentPage.numOfPages}">>></a></li>
 	</ul>
 		</div>
 		</div>

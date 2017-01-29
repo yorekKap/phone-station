@@ -2,7 +2,6 @@ package com.phone.station.service.interfaces;
 
 import java.util.List;
 
-import com.phone.station.entities.Service;
 import com.phone.station.entities.User;
 import com.phone.station.entities.enums.Role;
 
@@ -70,15 +69,14 @@ public interface UserService {
 	List<User> findAll();
 
 	/**
-	 * Find all {@link User} of the particular {@link Role}
+	 * Find all {@link User} with the particular {@link Role}
 	 *
 	 * @return {@link List} of {@link User}
 	 */
-
 	List<User> findAllWithRole(Role role);
 
 	/**
-	 * Find @{@code limit} {@link User}s of the particular {@link Role}
+	 * Find {@code limit} {@link User}s with the particular {@link Role}
 	 * starting from {@code offset}
 	 *
 	 * @param role
@@ -86,7 +84,8 @@ public interface UserService {
 	 * @param limit
 	 * @return {@link List} of {@link User}
 	 */
-	List<User> findAllWithRoleAndPageIndex(Role role, int pageIndex);
+	List<User> findAllWithRole(Role role, int offset, int limit);
+
 
 	/**
 	 * Update {@link User}
@@ -103,16 +102,7 @@ public interface UserService {
 	void delete(User user);
 
 	/**
-	 * Find {@link User} from given page
-	 *
-	 * @param index - index of page
-	 *
-	 * @return {@link List} of {@link User}
+	 * @return number of {@link User}s with particular {@link Role}
 	 */
-	List<User> findByPageIndex(int index);
-
-	/**
-	 * @return number of pages
-	 */
-	int getNumOfPages();
+	int getNumOfUsersWithRole(Role role);
 }

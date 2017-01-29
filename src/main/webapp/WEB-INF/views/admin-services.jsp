@@ -25,6 +25,9 @@
 <title>${title}</title>
 </head>
 <body>
+
+	<c:set var="services" value="${servicePage.records}"></c:set>
+
 	<%@ include file="/resources/jspf/admin-navbar.jspf" %>
             <div id="page-wrapper">
                 <div id="page-inner">
@@ -166,13 +169,13 @@
 </div>
 </div>
 
-	<png:setPageIndexesList numOfPages="${numOfPages}" numOfPageIndexes="5" index="${pageIndex}" list = "indexes"/>
+	<png:setPageIndexesList page="${servicePage}" numOfPageIndexes="5" list = "indexes"/>
 
 	<ul class = "pagination">
 	<li><a href = "/admin/services?page-index=1"><<</a></li>
 	<c:forEach items="${indexes}" var = "index">
 		<c:choose>
-		<c:when test="${index eq pageIndex}">
+		<c:when test="${index eq servicePage.pageIndex}">
 			<li class = "active"><a href = "/admin/services?page-index=${index}">${index}</a><li>
 		</c:when>
 		<c:otherwise>
@@ -180,7 +183,7 @@
 		</c:otherwise>
 		</c:choose>
 	</c:forEach>
-	<li><a href = "/admin/services?page-index=${numOfPages}">>></a></li>
+	<li><a href = "/admin/services?page-index=${servicePage.numOfPages}">>></a></li>
 	</ul>
 				</div>
 			</div>

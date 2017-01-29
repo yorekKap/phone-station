@@ -55,7 +55,7 @@ public class SecurityFilter implements Filter {
 			role = principal.getRole();
 		}
 
-		if (securityContext.hasAcces(url, role)) {
+		if (securityContext.hasAccess(url, role)) {
 			filterChain.doFilter(request, response);
 		}
 		else{

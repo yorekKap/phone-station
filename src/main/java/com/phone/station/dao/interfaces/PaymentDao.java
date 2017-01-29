@@ -20,7 +20,7 @@ public interface PaymentDao extends GenericDao<Payment, Long>{
 
 	List<Payment> findAllOrderedByDate();
 
-	int getNumOfRecordsWithUserId(Long userId);
+	int getNumOfPaymentsWithUserId(Long userId);
 
 
 }

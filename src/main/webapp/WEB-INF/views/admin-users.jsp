@@ -27,6 +27,8 @@
 <title>${title}</title>
 </head>
 <body>
+	<c:set var="users" value = "${page.records}"/>
+
 	<%@ include file="/resources/jspf/admin-navbar.jspf" %>
             <div id="page-wrapper">
                 <div id="page-inner">
@@ -88,13 +90,13 @@
 						</table>
 					</c:if>
 
-					<pgn:setPageIndexesList numOfPages="${numOfPages}" numOfPageIndexes="5" index="${pageIndex}" list="indexes"/>
+					<pgn:setPageIndexesList page="${userPage}" numOfPageIndexes="5" list="indexes"/>
 
 					<ul class="pagination">
 						<li><a href="/admin/users?page-index=1"><<</a></li>
 						<c:forEach items="${indexes}" var="index">
 							<c:choose>
-								<c:when test="${index eq pageIndex}">
+								<c:when test="${index eq userPage.pageIndex}">
 									<li class="active"><a href="/admin/users?page-index=${index}">${index}</a>
 									<li>
 								</c:when>
@@ -104,7 +106,7 @@
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-						<li><a href="/admin/users?page-index=${numOfPages}">>></a></li>
+						<li><a href="/admin/users?page-index=${userPage.numOfPages}">>></a></li>
 					</ul>
 
 				</div>

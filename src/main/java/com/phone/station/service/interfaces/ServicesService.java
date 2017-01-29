@@ -29,6 +29,16 @@ public interface ServicesService {
 	 */
 	List<Service> findAll();
 
+
+	/**
+	 * Find {@code limit} services from {@code offset}
+	 *
+	 * @param offset
+	 * @param limit
+	 * @return {@link List} of all services
+	 */
+	List<Service> findAll(int offset, int limit);
+
 	/**
 	 * Add {@link Service} to {@link User} by id
 	 *
@@ -95,16 +105,7 @@ public interface ServicesService {
 	void update(Service service);
 
 	/**
-	 * Find {@link Service} from given page
-	 *
-	 * @param index - index of page
-	 *
-	 * @return {@link List} of {@link Service}
+	 * @return number of records
 	 */
-	List<Service> findByPageIndex(int index);
-
-	/**
-	 * @return number of pages
-	 */
-	int getNumOfPages();
+	int getNumOfRecords();
 }

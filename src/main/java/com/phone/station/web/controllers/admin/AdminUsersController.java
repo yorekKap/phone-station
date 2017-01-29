@@ -1,7 +1,6 @@
 package com.phone.station.web.controllers.admin;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +9,8 @@ import com.phone.station.entities.User;
 import com.phone.station.entities.enums.Role;
 import com.phone.station.service.interfaces.UserService;
 import com.phone.station.web.dispatcher.Controller;
+import com.phone.station.web.paginator.Paginator;
+import com.phone.station.web.paginator.records.UsersWithRoleRecordsCollection;
 
 public class AdminUsersController extends Controller{
 
@@ -22,10 +23,16 @@ public class AdminUsersController extends Controller{
 
 	private static final String PAGE_INDEX = "page-index";
 
+	private static final String USER_PAGE = "userPage";
+
+	private static final int NUM_OF_RECORDS_PER_PAGE = 10;
+
 	UserService userService;
+	Paginator<User> paginator;
 
 	public AdminUsersController(UserService userService) {
 		this.userService = userService;
+		paginator = new Paginator<>(NUM_OF_RECORDS_PER_PAGE);
 	}
 
 	@Override
@@ -36,9 +43,10 @@ public class AdminUsersController extends Controller{
 			pageIndex = Integer.valueOf(pageIndexStr);
 		}
 
-		request.setAttribute(USERS_ATTRIBUTE, userService.findAllWithRoleAndPageIndex(Role.USER, pageIndex));
-		request.setAttribute("pageIndex", pageIndex);
-		request.setAttribute("numOfPages", userService.getNumOfPages());
+		paginator.setRecordsCollection(new UsersWithRoleRecordsCollection(userService, Role.USER));
+
+		request.setAttribute(USER_PAGE, paginator.findPage(pageIndex));
+
 		return USERS_URL;
 
 	}

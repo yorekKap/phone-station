@@ -8,8 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.phone.station.entities.Service;
 import com.phone.station.service.interfaces.ServicesService;
 import com.phone.station.web.dispatcher.Controller;
+import com.phone.station.web.paginator.PageInfo;
+import com.phone.station.web.paginator.Paginator;
+import com.phone.station.web.paginator.records.ServicesRecordsCollection;
 
 public class AdminServicesController extends Controller {
+
+	private static final String SERVICE_PAGE = "servicePage";
 
 	private static final String ADMIN_SERVICES_URL = "admin-services";
 
@@ -22,10 +27,14 @@ public class AdminServicesController extends Controller {
 
 	private static final String PAGE_INDEX = "page-index";
 
-	ServicesService serviceService;
+	private static final int NUM_OF_RECORDS_PER_PAGE = 5;
+
+	private ServicesService serviceService;
+	private Paginator<Service> paginator;
 
 	public AdminServicesController(ServicesService serviceService) {
 		this.serviceService = serviceService;
+		paginator = new Paginator<>(NUM_OF_RECORDS_PER_PAGE, new ServicesRecordsCollection(serviceService));
 	}
 
 	@Override
@@ -36,9 +45,9 @@ public class AdminServicesController extends Controller {
 			pageIndex = Integer.valueOf(pageIndexStr);
 		}
 
-		request.setAttribute("services", serviceService.findByPageIndex(pageIndex));
-		request.setAttribute("pageIndex", pageIndex);
-		request.setAttribute("numOfPages", serviceService.getNumOfPages());
+		PageInfo<Service> page = paginator.findPage(pageIndex);
+
+		request.setAttribute(SERVICE_PAGE, page);
 		return ADMIN_SERVICES_URL;
 	}
 
@@ -56,6 +65,7 @@ public class AdminServicesController extends Controller {
 			else if(action.equals(EDIT_SERVICE)){
 				editService(request);
 			}
+
 			response.sendRedirect("/admin/services");
 
 

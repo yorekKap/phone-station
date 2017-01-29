@@ -119,39 +119,52 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 	@Override
 	public User findByPhone(String phone) {
 		return builder.select("*")
-			   .leftJoin(TARRIF_TABLE)
-			   .on(TARIFF_ID, TARIFF_PK)
-			   .where(PHONE).isEquals(phone)
-			   .or(ADDITIONAL_PHONE).isEquals(phone)
-			   .executeForSingle(this::prepareResultSet);
+					  .leftJoin(TARRIF_TABLE)
+					  .on(TARIFF_ID, TARIFF_PK)
+					  .where(PHONE).isEquals(phone)
+					  .or(ADDITIONAL_PHONE).isEquals(phone)
+					  .executeForSingle(this::prepareResultSet);
 	}
 
 	@Override
 	public User findByUsername(String username) {
 		return builder.select("*")
-				.leftJoin(TARRIF_TABLE)
-				.on(TARIFF_ID, TARIFF_PK)
-				.where(USERNAME).isEquals(username)
-				.executeForSingle(this::prepareResultSet);
+					  .leftJoin(TARRIF_TABLE)
+					  .on(TARIFF_ID, TARIFF_PK)
+					  .where(USERNAME).isEquals(username)
+					  .executeForSingle(this::prepareResultSet);
 	}
 
 	@Override
 	public List<User> findAllWithRole(Role role) {
 		return builder.select("*")
-				.leftJoin(TARRIF_TABLE)
-				.on(TARIFF_ID, TARIFF_PK)
-				.where(USER_ROLE).isEquals(role.name())
-				.execute(this::prepareResultSet);
+					  .leftJoin(TARRIF_TABLE)
+					  .on(TARIFF_ID, TARIFF_PK)
+					  .where(USER_ROLE).isEquals(role.name())
+					  .execute(this::prepareResultSet);
 	}
 
 	@Override
 	public List<User> findAllWithRole(Role role, int offset, int limit) {
 		return builder.select("*")
-				.leftJoin(TARRIF_TABLE)
-				.on(TARIFF_ID, TARIFF_PK)
-				.where(USER_ROLE).isEquals(role.name())
-				.limit(offset, limit)
-				.execute(this::prepareResultSet);
+					  .leftJoin(TARRIF_TABLE)
+					  .on(TARIFF_ID, TARIFF_PK)
+					  .where(USER_ROLE).isEquals(role.name())
+					  .limit(offset, limit)
+					  .execute(this::prepareResultSet);
+
+
+	}
+
+	@Override
+	public int getNumOfUsersWithRole(Role role) {
+		return builder.select("count(*)")
+					  .leftJoin(TARRIF_TABLE)
+					  .on(TARIFF_ID, TARIFF_PK)
+					  .where(USER_ROLE).isEquals(role.name())
+					  .executeForSingle(rs -> rs.getInt(1));
+
+
 
 	}
 }

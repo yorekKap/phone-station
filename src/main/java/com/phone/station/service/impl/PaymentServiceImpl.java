@@ -10,21 +10,16 @@ import com.phone.station.dao.interfaces.UserDao;
 import com.phone.station.entities.Payment;
 import com.phone.station.entities.User;
 import com.phone.station.service.interfaces.PaymentService;
-import com.phone.station.web.paginator.Paginator;
 
 public class PaymentServiceImpl implements PaymentService {
 	private static final Logger log = Logger.getLogger(PaymentServiceImpl.class);
 
-	private static final int NUM_OF_RECORDS_PER_PAGE = 5;
-
 	PaymentDao paymentDao;
 	UserDao userDao;
-	Paginator<Payment> paymentsPaginator;
 
 	public PaymentServiceImpl(PaymentDao paymentDao, UserDao userDao) {
 		this.paymentDao = paymentDao;
 		this.userDao = userDao;
-		this.paymentsPaginator = new Paginator<Payment>(NUM_OF_RECORDS_PER_PAGE);
 	}
 
 	@Override
@@ -50,15 +45,12 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<Payment> findByUserIdAndPageIndex(Long userId, int pageIndex) {
-		return paymentsPaginator.findPage(pageIndex, (x,y) -> paymentDao.findByUserIdOrderedByDate(userId, x, y));
+	public List<Payment> findByUserId(Long userId, int offset, int limit) {
+		return paymentDao.findByUserIdOrderedByDate(userId, offset, limit);
 	}
 
 	@Override
-	public int getNumOfPagesWithUserId(Long userId) {
-		int numOfRecords = paymentDao.getNumOfRecordsWithUserId(userId);
-		return paymentsPaginator.getNumOfPages(numOfRecords);
+	public int getNumOfPaymentsWithUserId(Long userId) {
+		return paymentDao.getNumOfPaymentsWithUserId(userId);
 	}
-
-
 }

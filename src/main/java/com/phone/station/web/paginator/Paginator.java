@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.phone.station.exceptions.web.pagination.PaginationException;
 import com.phone.station.web.paginator.functions.FindAllWithLimitFunction;
 
 
@@ -17,12 +18,22 @@ import com.phone.station.web.paginator.functions.FindAllWithLimitFunction;
 public class Paginator<T> {
 	private static final Logger log = Logger.getLogger(Paginator.class);
 
-	private static final int DEFAULT_NUM_OF_ROWS_PER_PAGE = 10;
+	private int numOfRecordsPerPage;
+	private RecordsCollection<T> recordsCollection;
 
-	private int numOfRecordsPerPage = DEFAULT_NUM_OF_ROWS_PER_PAGE;
 
-	public Paginator(int numOfRowsPerPage) {
-		this.numOfRecordsPerPage = numOfRowsPerPage;
+
+	public Paginator(int numOfRecordsPerPage) {
+		this.numOfRecordsPerPage = numOfRecordsPerPage;
+	}
+
+	public Paginator(int numOfRecordsPerPage, RecordsCollection<T> recordsCollection) {
+		this.numOfRecordsPerPage = numOfRecordsPerPage;
+		this.recordsCollection = recordsCollection;
+	}
+
+	public void setRecordsCollection(RecordsCollection<T> recordsCollection) {
+		this.recordsCollection = recordsCollection;
 	}
 
 	/**
@@ -32,18 +43,31 @@ public class Paginator<T> {
 	 * @param pageIndex - index of page
 	 * @return {@link List} of entities.
 	 */
-	public List<T> findPage(int pageIndex, FindAllWithLimitFunction<T> findFunction){
-		pageIndex = pageIndex - 1;
-		int offset = pageIndex * numOfRecordsPerPage;
-		List<T> result = findFunction.findAll(offset, numOfRecordsPerPage);
-		if(result.isEmpty()){
+	public PageInfo<T> findPage(int pageIndex){
+		if(recordsCollection == null){
+			log.error("RecordsCollection is not set");
+			throw new PaginationException("RecordsCollection must be set by constructor"
+					+ " or using setter method");
+		}
+
+		int numOfPages = getNumOfPages(recordsCollection.getNumOfRecords());
+		if(pageIndex < 1 || pageIndex > numOfPages){
+			String message ="Index is  invalid: " + pageIndex + ";numOfPages: " + numOfPages;
+			log.error(message);
+			throw new PaginationException(message);
+		}
+
+		int offset = (pageIndex - 1) * numOfRecordsPerPage;
+		List<T> records = recordsCollection.getRecords(offset, numOfRecordsPerPage);
+		if(records.isEmpty()){
 			log.warn("No elements from offset: " + offset);
 		}
 
-		return result;
+		int numOfRecords = recordsCollection.getNumOfRecords();
+		return new PageInfo<T>(records, pageIndex, getNumOfPages(numOfRecords));
 	}
 
-	public int getNumOfPages(int numOfRecords){
+	private int getNumOfPages(int numOfRecords){
 		int numOfPages = (int)Math.ceil((double)numOfRecords / numOfRecordsPerPage);
 		if(numOfPages == 0){
 			return 1;

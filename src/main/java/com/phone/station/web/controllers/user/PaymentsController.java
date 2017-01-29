@@ -9,15 +9,23 @@ import com.phone.station.entities.Payment;
 import com.phone.station.service.interfaces.PaymentService;
 import com.phone.station.utils.CurrentUserFetcher;
 import com.phone.station.web.dispatcher.Controller;
+import com.phone.station.web.paginator.Paginator;
+import com.phone.station.web.paginator.records.PaymentsWithUserIdRecordsCollection;
 
 public class PaymentsController extends Controller {
 
+	private static final String PAYMENT_PAGE = "paymentPage";
+
+	private static final int NUM_OR_RECORDS_PER_PAGE = 5;
+
 	private static final String PAGE_INDEX_PARAMETER = "page-index";
 
-	PaymentService paymentService;
+	private PaymentService paymentService;
+	private Paginator<Payment> paginator;
 
 	public PaymentsController(PaymentService paymentService) {
 		this.paymentService = paymentService;
+		paginator = new Paginator<>(NUM_OR_RECORDS_PER_PAGE);
 	}
 
 	@Override
@@ -30,12 +38,9 @@ public class PaymentsController extends Controller {
 			pageIndex = Integer.valueOf(pageIndexStr);
 		}
 
-		List<Payment> payments = paymentService.findByUserIdAndPageIndex(userId, pageIndex);
-		int numOfPages = paymentService.getNumOfPagesWithUserId(userId);
+		paginator.setRecordsCollection(new PaymentsWithUserIdRecordsCollection(paymentService, userId));
 
-		request.setAttribute("payments", payments);
-		request.setAttribute("pageIndex", pageIndex);
-		request.setAttribute("numOfPages", numOfPages);
+		request.setAttribute(PAYMENT_PAGE, paginator.findPage(pageIndex));
 
 		return "payments";
 	}
