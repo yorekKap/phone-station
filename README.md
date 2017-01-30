@@ -1,5 +1,5 @@
 # phone-station
-###* The test project created for EPAM courses
+### The test project created for EPAM courses
 
 #### TASK
  Telephone station system. Administrator connects subscriber(User). Subscriber can choose one or few of services. Subscriber pays bill for phone talkings and services.Admin can see list of unpayed bills and disconnect subscriber.
