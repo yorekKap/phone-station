@@ -7,11 +7,13 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import com.mysql.cj.jdbc.exceptions.MySQLTransactionRollbackException;
 import com.phone.station.dao.builder.SelectQuery;
 import com.phone.station.dao.interfaces.TariffDao;
 import com.phone.station.dao.parsers.ObjectToColumnValueMapParser;
 import com.phone.station.dao.parsers.ResultSetParser;
 import com.phone.station.entities.Tariff;
+import com.phone.station.exceptions.dao.MySQLTransactionException;
 
 /**
  * DAO class for managing {@link Tariff} entities
@@ -20,7 +22,6 @@ import com.phone.station.entities.Tariff;
  *
  */
 public class JdbcTariffDao extends AbstractJdbcDao<Tariff, Long> implements TariffDao{
-
 	private static final String	TABLE_NAME = "tariffs";
 
 	//column names
@@ -85,15 +86,24 @@ public class JdbcTariffDao extends AbstractJdbcDao<Tariff, Long> implements Tari
 
 	@Override
 	public void delete(Tariff object) {
-		builder.update(USERS_TABLE)
-			   .set(USERS_TARIF_ID, null)
-			   .where(USERS_TARIF_ID).isEquals(object.getId())
+		try{
+			builder.beginTransaction();
+
+			builder.update(USERS_TABLE)
+				   .set(USERS_TARIF_ID, null)
+				   .where(USERS_TARIF_ID).isEquals(object.getId())
+				   .execute();
+
+			builder.delete()
+			   .from(getTableName())
+			   .where(getPK()).isEquals(object.getId())
 			   .execute();
 
-		builder.delete()
-		   .from(getTableName())
-		   .where(getPK()).isEquals(object.getId())
-		   .execute();
+			builder.commit();
+
+		}catch(MySQLTransactionException e){
+			builder.rollback();
+		}
 
 	}
 

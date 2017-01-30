@@ -35,12 +35,11 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 	private static final String USER_ROLE = TABLE_NAME + ".user_role";
 
 	//tariff column names
-	private static final String TARIFF_PK = TARRIF_TABLE + ".id";
+	private static final String TARIFFS_TABLE_PK = TARRIF_TABLE + ".id";
 
 	//users_services table
 	private static final String USERS_SERVICES_TABLE = "users_services";
 	private static final String USER_ID = USERS_SERVICES_TABLE + ".user_id";
-	private static final String SERVICE_ID = USERS_SERVICES_TABLE + ".service_id";
 
 	public JdbcUserDao(DataSource dataSource) {
 		super(dataSource);
@@ -91,7 +90,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 	 */
 	@Override
 	public void provideInnerJoin(SelectQuery query) {
-		query.leftJoin(TARRIF_TABLE).on(TARIFF_ID, TARIFF_PK);
+		query.leftJoin(TARRIF_TABLE).on(TARIFF_ID, TARIFFS_TABLE_PK);
 	}
 
 	/**
@@ -103,7 +102,6 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 
 	@Override
 	public void delete(User object) {
-
 		builder.delete()
 			   .from(USERS_SERVICES_TABLE)
 			   .where(USER_ID).isEquals(object.getId())
@@ -120,7 +118,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 	public User findByPhone(String phone) {
 		return builder.select("*")
 					  .leftJoin(TARRIF_TABLE)
-					  .on(TARIFF_ID, TARIFF_PK)
+					  .on(TARIFF_ID, TARIFFS_TABLE_PK)
 					  .where(PHONE).isEquals(phone)
 					  .or(ADDITIONAL_PHONE).isEquals(phone)
 					  .executeForSingle(this::prepareResultSet);
@@ -130,7 +128,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 	public User findByUsername(String username) {
 		return builder.select("*")
 					  .leftJoin(TARRIF_TABLE)
-					  .on(TARIFF_ID, TARIFF_PK)
+					  .on(TARIFF_ID, TARIFFS_TABLE_PK)
 					  .where(USERNAME).isEquals(username)
 					  .executeForSingle(this::prepareResultSet);
 	}
@@ -139,7 +137,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 	public List<User> findAllWithRole(Role role) {
 		return builder.select("*")
 					  .leftJoin(TARRIF_TABLE)
-					  .on(TARIFF_ID, TARIFF_PK)
+					  .on(TARIFF_ID, TARIFFS_TABLE_PK)
 					  .where(USER_ROLE).isEquals(role.name())
 					  .execute(this::prepareResultSet);
 	}
@@ -148,7 +146,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 	public List<User> findAllWithRole(Role role, int offset, int limit) {
 		return builder.select("*")
 					  .leftJoin(TARRIF_TABLE)
-					  .on(TARIFF_ID, TARIFF_PK)
+					  .on(TARIFF_ID, TARIFFS_TABLE_PK)
 					  .where(USER_ROLE).isEquals(role.name())
 					  .limit(offset, limit)
 					  .execute(this::prepareResultSet);
@@ -160,7 +158,7 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 	public int getNumOfUsersWithRole(Role role) {
 		return builder.select("count(*)")
 					  .leftJoin(TARRIF_TABLE)
-					  .on(TARIFF_ID, TARIFF_PK)
+					  .on(TARIFF_ID, TARIFFS_TABLE_PK)
 					  .where(USER_ROLE).isEquals(role.name())
 					  .executeForSingle(rs -> rs.getInt(1));
 

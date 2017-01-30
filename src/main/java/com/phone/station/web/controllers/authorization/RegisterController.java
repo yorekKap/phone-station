@@ -18,15 +18,6 @@ public class RegisterController extends Controller {
 
 	UserService userService;
 
-	//parameters names
-	private static final String FIRST_NAME = "first_name";
-	private static final String LAST_NAME = "last_name";
-	private static final String PASSWORD = "password";
-	private static final String USERNAME = "username";
-	private static final String PHONE = "phone";
-
-	private static final String LOGIN_URL = "/login";
-
 	public RegisterController(UserService userService) {
 		this.userService = userService;
 	}
@@ -44,7 +35,7 @@ public class RegisterController extends Controller {
 			try {
 				log.info("User with username: "+ user.getUsername() + ";password: " +
 						  user.getPassword() + "is registered");
-				response.sendRedirect(LOGIN_URL);
+				response.sendRedirect("/login");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -60,11 +51,11 @@ public class RegisterController extends Controller {
 
 	private User getUser(HttpServletRequest request){
 		User user = new User();
-		user.setFirstName(request.getParameter(FIRST_NAME));
-		user.setLastName(request.getParameter(LAST_NAME));
-		user.setPhone(request.getParameter(PHONE));
-		user.setUsername(request.getParameter(USERNAME));
-		user.setPassword(request.getParameter(PASSWORD));
+		user.setFirstName(request.getParameter("first_name"));
+		user.setLastName(request.getParameter("last_name"));
+		user.setPhone(request.getParameter("phone"));
+		user.setUsername(request.getParameter("username"));
+		user.setPassword(request.getParameter("password"));
 		user.setUserRole(Role.USER);
 		user.setRegistrationDate(new Date());
 

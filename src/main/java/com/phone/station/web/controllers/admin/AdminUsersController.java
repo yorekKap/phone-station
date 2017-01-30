@@ -14,16 +14,9 @@ import com.phone.station.web.paginator.records.UsersWithRoleRecordsCollection;
 
 public class AdminUsersController extends Controller{
 
-	private static final String USERS_ATTRIBUTE = "users";
 	private static final String ACTION_PARAMETER = "action";
 	private static final String DISCONNECT_USER = "disconnect-user";
 	private static final String FAIL = "fail";
-
-	private static final String USERS_URL = "admin-users";
-
-	private static final String PAGE_INDEX = "page-index";
-
-	private static final String USER_PAGE = "userPage";
 
 	private static final int NUM_OF_RECORDS_PER_PAGE = 10;
 
@@ -37,7 +30,7 @@ public class AdminUsersController extends Controller{
 
 	@Override
 	public String get(HttpServletRequest request, HttpServletResponse response) {
-		String pageIndexStr = request.getParameter(PAGE_INDEX);
+		String pageIndexStr = request.getParameter("page-index");
 		int pageIndex = 1;
 		if(pageIndexStr != null){
 			pageIndex = Integer.valueOf(pageIndexStr);
@@ -45,9 +38,9 @@ public class AdminUsersController extends Controller{
 
 		paginator.setRecordsCollection(new UsersWithRoleRecordsCollection(userService, Role.USER));
 
-		request.setAttribute(USER_PAGE, paginator.findPage(pageIndex));
+		request.setAttribute("userPage", paginator.findPage(pageIndex));
 
-		return USERS_URL;
+		return "admin-users";
 
 	}
 
@@ -57,11 +50,11 @@ public class AdminUsersController extends Controller{
 
 		if(action != null){
 			if(action.equals(DISCONNECT_USER)){
-				return disconnectUser(request, response);
+				disconnectUser(request, response);
 			}
-			else{
-				return null;
-			}
+
+			return null;
+
 		}
 		else{
 			try {
@@ -75,21 +68,18 @@ public class AdminUsersController extends Controller{
 		}
 	}
 
-	private String disconnectUser(HttpServletRequest request, HttpServletResponse response){
+	private void disconnectUser(HttpServletRequest request, HttpServletResponse response){
 		try{
 			Long userId = Long.valueOf(request.getParameter("userId"));
 			User user = userService.findById(userId);
 			userService.delete(user);
-			return null;
 		}catch (NumberFormatException e) {
 			try {
 				response.getOutputStream().write(FAIL.getBytes());
 				response.flushBuffer();
 				e.printStackTrace();
-				return null;
 			} catch (IOException e1) {
 				e1.printStackTrace();
-				return null;
 			}
 		}
 		}

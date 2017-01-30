@@ -17,16 +17,7 @@ public class LoginController extends Controller{
 	private static final Logger log = Logger.getLogger(LoginController.class);
 
 	private static final String LOGIN_VIEW = "login";
-
 	private static final String FAIL = "fail";
-	private static final String FAIL_PASSWORD = "fpassword";
-	private static final String FAIL_USERNAME = "fusername";
-
-	private static final String PASSWORD_PARAMETER = "password";
-	private static final String USERNAME_PARAMETER = "username";
-
-	private final static String HOME_URL = "/home";
-	private final static String ADMIN_URL = "/admin";
 
 	AuthenticationService authService;
 
@@ -41,8 +32,8 @@ public class LoginController extends Controller{
 
 	@Override
 	public String post(HttpServletRequest request, HttpServletResponse response) {
-		String username = request.getParameter(USERNAME_PARAMETER);
-		String password = request.getParameter(PASSWORD_PARAMETER);
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
 		UserPrincipal principal = null;
 
 		try{
@@ -51,19 +42,19 @@ public class LoginController extends Controller{
 			request.getSession().setMaxInactiveInterval(20 * 60);
 
 			if(principal.getRole() == Role.ADMIN){
-				response.sendRedirect(ADMIN_URL);
+				response.sendRedirect("/admin");
 				log.info("Admin has been logged in");
 			}
 			else{
-				response.sendRedirect(HOME_URL);
+				response.sendRedirect("/home");
 				log.info("User: " + username + " has been logged in");
 			}
 			return null;
 
 		}catch(AuthenticationException e){
 			request.setAttribute(FAIL, e.getReason());
-			request.setAttribute(FAIL_USERNAME, username);
-			request.setAttribute(FAIL_PASSWORD, password);
+			request.setAttribute("fpassword", username);
+			request.setAttribute("fusername", password);
 			log.info("Login failed for username: " + username + ";password: " + password);
 			return LOGIN_VIEW;
 		} catch (IOException e) {

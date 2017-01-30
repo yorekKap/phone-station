@@ -167,10 +167,10 @@
 			</div>
 		</div>
 </div>
-</div>
 
 	<png:setPageIndexesList page="${servicePage}" numOfPageIndexes="5" list = "indexes"/>
 
+	<div >
 	<ul class = "pagination">
 	<li><a href = "/admin/services?page-index=1"><<</a></li>
 	<c:forEach items="${indexes}" var = "index">
@@ -185,6 +185,7 @@
 	</c:forEach>
 	<li><a href = "/admin/services?page-index=${servicePage.numOfPages}">>></a></li>
 	</ul>
+	</div>
 				</div>
 			</div>
 

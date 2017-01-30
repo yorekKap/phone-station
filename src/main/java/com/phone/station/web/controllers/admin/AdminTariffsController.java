@@ -11,17 +11,8 @@ import com.phone.station.web.dispatcher.Controller;
 
 public class AdminTariffsController extends Controller {
 
-	private static final String URL = "/admin/tariffs";
-
-	private static final String TARIFFS_VIEW = "admin-tariffs";
-
 	private static final String FAIL = "fail";
-
 	private static final String ACTION_PARAMETER = "action";
-
-	private static final String EDIT_TARIFF = "edit-tariff";
-	private static final String DELETE_TARIFF = "delete-tariff";
-	private static final String CREATE_TARIFF = "create-tariff";
 
 	private static final String ID = "id";
 	private static final String TITLE = "title";
@@ -40,7 +31,7 @@ public class AdminTariffsController extends Controller {
 	@Override
 	public String get(HttpServletRequest request, HttpServletResponse response) {
 		request.setAttribute("tariffs", tariffService.findAll());
-		return TARIFFS_VIEW;
+		return "admin-tariffs";
 	}
 
 	@Override
@@ -48,16 +39,16 @@ public class AdminTariffsController extends Controller {
 		String action = request.getParameter(ACTION_PARAMETER);
 
 		try{
-			if(action.equals(CREATE_TARIFF)){
+			if(action.equals("create-tariff")){
 				createTariff(request);
 			}
-			else if(action.equals(DELETE_TARIFF)){
+			else if(action.equals("delete-tariff")){
 				deleteTariff(request);
 			}
-			else if(action.equals(EDIT_TARIFF)){
+			else if(action.equals("edit-tariff")){
 				editTariff(request);
 			}
-			response.sendRedirect(URL);
+			response.sendRedirect("/admin/tariffs");
 
 
 		}catch(Exception e){

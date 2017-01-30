@@ -27,7 +27,7 @@
 <title>${title}</title>
 </head>
 <body>
-	<c:set var="users" value = "${page.records}"/>
+	<c:set var="users" value = "${userPage.records}"/>
 
 	<%@ include file="/resources/jspf/admin-navbar.jspf" %>
             <div id="page-wrapper">

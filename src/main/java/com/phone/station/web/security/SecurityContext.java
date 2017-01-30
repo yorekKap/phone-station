@@ -148,8 +148,8 @@ public class SecurityContext {
 	/**
 	 * Builder class for the {@link SecurityContext}
 	 *
-	 * @author yuri
 	 *
+	 * @author yuri
 	 */
 	public static class SecurityContextBuilder implements SecurityContextBuilderAccesModifier{
 
