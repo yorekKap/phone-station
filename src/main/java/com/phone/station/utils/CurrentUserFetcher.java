@@ -35,7 +35,6 @@ public class CurrentUserFetcher {
 		return userService.findByUsername(username);
 	}
 
-
 	/**
 	 * Get current {@link User} {@code id}
 	 *

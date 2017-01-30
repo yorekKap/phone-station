@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.phone.station.config.WebAppContext;
 import com.phone.station.exceptions.dispatcher.BadRequestException;
 
 /**
@@ -26,8 +25,7 @@ public class DispatcherServlet extends HttpServlet {
 	RequestHelper helper;
 
     public DispatcherServlet() {
-        super();
-        helper = WebAppContext.get(RequestHelper.class);
+        helper = RequestHelper.getInstance();
    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

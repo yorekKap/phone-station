@@ -39,9 +39,7 @@ public class WebConfig implements Config {
 	@Override
 	public void init(Components components) {
 		components.add(ControllersMapper.class, getControllersMapper())
-				  .add(ViewResolver.class, getViewResolver())
-				  .add(RequestHelper.class, getRequestHelper(getControllersMapper()));
-
+				  .add(ViewResolver.class, getViewResolver());
 	}
 
 	/**
@@ -82,12 +80,14 @@ public class WebConfig implements Config {
 		return ViewResolver.getBuilder().setPrefix("/WEB-INF/views/").setSuffix(".jsp").create();
 	}
 
+
+	//commented to show singleton usage
 	/**
 	 * @param mapper to link it with {@link ConrollersMapper}
 	 * @return @{link RequestHelper}
-	 */
+	 *//*
 	public RequestHelper getRequestHelper(ControllersMapper mapper) {
 		return new RequestHelper(mapper);
-	}
+	}*/
 
 }

@@ -9,24 +9,49 @@ import com.phone.station.utils.ContextPathFetcher;
 /**
  * Serve for fetching right {@link Controller} by means of
  * {@link ControllersMapper}
+ * </p>
+ * Made as singleton in illustration purposes.
  *
  * @author yuri
  */
 public class RequestHelper {
 
-	ControllersMapper mapper;
+	private static RequestHelper instance;
 
-	public RequestHelper(ControllersMapper mapper){
+	private ControllersMapper mapper;
+
+	private RequestHelper(){
+		mapper = WebAppContext.get(ControllersMapper.class);
+	}
+
+	private RequestHelper(ControllersMapper mapper){
 		this.mapper = mapper;
 	}
 
 	public Controller getController(HttpServletRequest request){
 		String url = ContextPathFetcher.getContextPath(request);
-		Controller controller = WebAppContext.get(ControllersMapper.class).get(url);
+		Controller controller = mapper.get(url);
 			if(controller == null){
 				throw new BadRequestException("There is no controller for " + url);
 			}
 
 		return controller;
+	}
+
+	public static RequestHelper getInstance(){
+		if(instance == null){
+			synchronized(RequestHelper.class){
+				if(instance == null){
+					return new RequestHelper();
+				}
+			}
+		}
+
+		return instance;
+	}
+
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		throw new CloneNotSupportedException();
 	}
 }
