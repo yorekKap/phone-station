@@ -37,6 +37,10 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 	//tariff column names
 	private static final String TARIFFS_TABLE_PK = TARRIF_TABLE + ".id";
 
+	//payments
+	private static final String PAYMENTS_TABLE = "payments";
+	private static final String PAYMENT_USER_ID = PAYMENTS_TABLE + ".user_id";
+
 	//users_services table
 	private static final String USERS_SERVICES_TABLE = "users_services";
 	private static final String USER_ID = USERS_SERVICES_TABLE + ".user_id";
@@ -102,6 +106,11 @@ public class JdbcUserDao extends AbstractJdbcDao<User, Long> implements UserDao{
 
 	@Override
 	public void delete(User object) {
+		builder.delete()
+			   .from(PAYMENTS_TABLE)
+			   .where(PAYMENT_USER_ID).isEquals(object.getId())
+			   .execute();
+
 		builder.delete()
 			   .from(USERS_SERVICES_TABLE)
 			   .where(USER_ID).isEquals(object.getId())

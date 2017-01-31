@@ -34,8 +34,8 @@
 					<div class="panel-body">
 						${news.content}
 						<div style="width: 460px; margin-top: 20px;">
-							<img src="/resources/img/news/${news.id}.jpg"
-								style="width: 60%; border: 1px groove black">
+							<img src="/resources/img/news/${news.id}.jpg" alt=""
+								style="width: 60%;">
 						</div>
 					</div>
 				</div>
