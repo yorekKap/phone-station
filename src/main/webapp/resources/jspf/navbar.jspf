@@ -1,4 +1,5 @@
 <fmt:message key="navbar.mainpage" var = "loc_mainpage"/>
+<fmt:message key="navbar.news" var = "loc_news"/>
 <fmt:message key="navbar.payments" var = "loc_payments"/>
 <fmt:message key="navbar.messages" var = "loc_messages"/>
 <fmt:message key="navbar.tariffs" var = "loc_tariffs"/>
@@ -56,6 +57,11 @@
                         <li>
                             <a href="/home">${loc_mainpage}</a>
                         </li>
+
+						<li>
+                            <a href="/news">${loc_news}</a>
+                        </li>
+
 
                         <li>
                             <a href="/payments">${loc_payments}</a>

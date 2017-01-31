@@ -6,10 +6,12 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 import com.phone.station.dao.factories.DataSourceFactory;
+import com.phone.station.dao.implementation.jdbc.JdbcNewsDao;
 import com.phone.station.dao.implementation.jdbc.JdbcPaymentDao;
 import com.phone.station.dao.implementation.jdbc.JdbcServiceDao;
 import com.phone.station.dao.implementation.jdbc.JdbcUserDao;
 import com.phone.station.dao.implementation.jdbc.JdbcTariffDao;
+import com.phone.station.dao.interfaces.NewsDao;
 import com.phone.station.dao.interfaces.PaymentDao;
 import com.phone.station.dao.interfaces.ServiceDao;
 import com.phone.station.dao.interfaces.TariffDao;
@@ -36,7 +38,8 @@ public class DaoConfig implements Config{
 			.add(ServiceDao.class,    new JdbcServiceDao(dataSource))
 			.add(UserDao.class, 	  new JdbcUserDao(dataSource))
 			.add(TariffDao.class,     new JdbcTariffDao(dataSource))
-			.add(PaymentDao.class,    new JdbcPaymentDao(dataSource));
+			.add(PaymentDao.class,    new JdbcPaymentDao(dataSource))
+			.add(NewsDao.class, 	  new JdbcNewsDao(dataSource));
 
 		log.info("Dao components added");
 	}

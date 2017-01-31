@@ -3,6 +3,7 @@ package com.phone.station.config;
 import org.apache.log4j.Logger;
 
 import com.phone.station.service.interfaces.AuthenticationService;
+import com.phone.station.service.interfaces.NewsService;
 import com.phone.station.service.interfaces.PaymentService;
 import com.phone.station.service.interfaces.ServicesService;
 import com.phone.station.service.interfaces.TariffService;
@@ -15,12 +16,12 @@ import com.phone.station.web.controllers.authorization.LoginController;
 import com.phone.station.web.controllers.authorization.LogoutController;
 import com.phone.station.web.controllers.authorization.RegisterController;
 import com.phone.station.web.controllers.user.HomeController;
+import com.phone.station.web.controllers.user.NewsController;
 import com.phone.station.web.controllers.user.PaymentsController;
 import com.phone.station.web.controllers.user.RefillController;
 import com.phone.station.web.controllers.user.ServiceController;
 import com.phone.station.web.controllers.user.TariffsController;
 import com.phone.station.web.dispatcher.ControllersMapper;
-import com.phone.station.web.dispatcher.RequestHelper;
 import com.phone.station.web.resolvers.ViewResolver;
 
 /**
@@ -51,18 +52,19 @@ public class WebConfig implements Config {
 		TariffService tariffService = WebAppContext.get(TariffService.class);
 		ServicesService servicesService = WebAppContext.get(ServicesService.class);
 		PaymentService paymentService = WebAppContext.get(PaymentService.class);
-
+		NewsService newsService = WebAppContext.get(NewsService.class);
 
 		ControllersMapper controllersMapper = ControllersMapper.createBuilder()
 				.add("/login",			   new LoginController(authService))
 				.add("/register", 	       new RegisterController(userService))
 				.add("/home", 			   new HomeController(userService))
 				.add("/logout", 		   new LogoutController())
+				.add("/news", 			   new NewsController(newsService))
 				.add("/tariffs", 		   new TariffsController(tariffService, userService))
 				.add("/services", 		   new ServiceController(servicesService, userService, paymentService))
 				.add("/payments", 		   new PaymentsController(paymentService))
 				.add("/refill",			   new RefillController(paymentService))
-				.add("/admin", 			   new AdminController(userService))
+				.add("/admin", 			   new AdminController(userService, newsService))
 				.add("/admin/users", 	   new AdminUsersController(userService))
 				.add("/admin/services",    new AdminServicesController(servicesService))
 				.add("/admin/tariffs", 	   new AdminTariffsController(tariffService))

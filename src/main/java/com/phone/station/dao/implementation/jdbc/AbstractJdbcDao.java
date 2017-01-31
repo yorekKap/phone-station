@@ -90,8 +90,19 @@ public abstract class AbstractJdbcDao<T extends Identified<Long>, K extends Numb
 	@Override
 	public boolean persist(T object) {
 		try {
+			builder.beginTransaction();
+
 			builder.insert().into(getTableName()).setValues(getValuesMap(object)).execute();
+
+			String maxId = "max(" + getPK() + ")";
+			Long id =  builder.select(maxId)
+							 .from(getTableName())
+							 .executeForSingle(rs -> rs.getLong(1));
+			builder.commit();
+
+			object.setId(id);
 		} catch (MySQLException e) {
+			builder.rollback();
 			return false;
 		}
 
