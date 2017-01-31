@@ -31,7 +31,7 @@ public class TariffsController extends Controller {
 	@Override
 	public String get(HttpServletRequest request, HttpServletResponse response) {
 		List<Tariff> tariffs = tariffService.findAll();
-		User user = CurrentUserFetcher.getCurrentUser(request);
+		User user = CurrentUserFetcher.getCurrentUser(request, userService);
 		request.setAttribute("currentTariffId", user.getTariffId());
 		request.setAttribute("tariffs", tariffs);
 		return "tariffs";
@@ -60,7 +60,7 @@ public class TariffsController extends Controller {
 	}
 
 	private void removeTariff(HttpServletRequest request, HttpServletResponse response){
-		User user = CurrentUserFetcher.getCurrentUser(request);
+		User user = CurrentUserFetcher.getCurrentUser(request, userService);
 		user.setTariffId(null);
 
 		userService.update(user);

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.phone.station.entities.Payment;
 import com.phone.station.service.interfaces.PaymentService;
 import com.phone.station.utils.CurrentUserFetcher;
+import com.phone.station.utils.PageIndexFetcher;
 import com.phone.station.web.dispatcher.Controller;
 import com.phone.station.web.paginator.Paginator;
 import com.phone.station.web.paginator.records.PaymentsWithUserIdRecordsCollection;
@@ -31,12 +32,7 @@ public class PaymentsController extends Controller {
 	@Override
 	public String get(HttpServletRequest request, HttpServletResponse response) {
 		Long userId = CurrentUserFetcher.getCurrentUserId(request);
-		String pageIndexStr = request.getParameter(PAGE_INDEX_PARAMETER);
-		Integer pageIndex = 1;
-
-		if(pageIndexStr != null){
-			pageIndex = Integer.valueOf(pageIndexStr);
-		}
+		int pageIndex = PageIndexFetcher.getPageIndex(request);
 
 		paginator.setRecordsCollection(new PaymentsWithUserIdRecordsCollection(paymentService, userId));
 

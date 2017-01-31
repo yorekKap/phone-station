@@ -22,15 +22,13 @@ import com.phone.station.web.security.UserPrincipal;
  */
 public class CurrentUserFetcher {
 
-	static UserService userService = WebAppContext.get(UserService.class);
-
 	/**
 	 * Get {@link User} currently authorized from {@link HttpServletRequest}
 	 *
 	 * @param request from which @link
 	 * @return
 	 */
-	public static User getCurrentUser(HttpServletRequest request){
+	public static User getCurrentUser(HttpServletRequest request, UserService userService){
 		String username = ((UserPrincipal)request.getSession().getAttribute("principal")).getName();
 		return userService.findByUsername(username);
 	}

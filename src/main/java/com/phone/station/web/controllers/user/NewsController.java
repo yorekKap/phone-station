@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.phone.station.entities.News;
 import com.phone.station.service.interfaces.NewsService;
+import com.phone.station.utils.PageIndexFetcher;
 import com.phone.station.web.dispatcher.Controller;
 import com.phone.station.web.paginator.Paginator;
 import com.phone.station.web.paginator.records.NewsRecordsCollection;
@@ -23,12 +24,7 @@ public class NewsController extends Controller {
 
 	@Override
 	public String get(HttpServletRequest request, HttpServletResponse response) {
-		String pageIndexStr = request.getParameter("page-index");
-		int pageIndex = 1;
-		if(pageIndexStr != null){
-			pageIndex = Integer.valueOf(pageIndexStr);
-		}
-
+		int pageIndex = PageIndexFetcher.getPageIndex(request);
 		request.setAttribute("newsPage", paginator.findPage(pageIndex));
 		return "news";
 

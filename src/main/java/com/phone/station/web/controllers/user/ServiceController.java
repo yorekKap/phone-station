@@ -34,7 +34,7 @@ public class ServiceController extends Controller{
 
 	@Override
 	public String get(HttpServletRequest request, HttpServletResponse response) {
-		User user = CurrentUserFetcher.getCurrentUser(request);
+		User user = CurrentUserFetcher.getCurrentUser(request, userService);
 
 		request.setAttribute("myServices", servicesService.findAllOfUser(user.getId()));
 		request.setAttribute("services", servicesService.findAllNotOfUser(user.getId()));
@@ -64,7 +64,7 @@ public class ServiceController extends Controller{
 
 	private void setAdditionalNumber(HttpServletRequest request, HttpServletResponse response) {
 		Long serviceId = Long.valueOf(request.getParameter("serviceid"));
-		User user =  CurrentUserFetcher.getCurrentUser(request);
+		User user =  CurrentUserFetcher.getCurrentUser(request, userService);
 		String additionalPhone = request.getParameter("number");
 
 		User testUser = userService.findByPhone(additionalPhone);
@@ -89,7 +89,7 @@ public class ServiceController extends Controller{
 
 	private void setNewNumber(HttpServletRequest request, HttpServletResponse response) {
 		Long serviceId = Long.valueOf(request.getParameter("serviceid"));
-		User user =  CurrentUserFetcher.getCurrentUser(request);
+		User user =  CurrentUserFetcher.getCurrentUser(request, userService);
 		String newPhone = request.getParameter("number");
 
 		User testUser = userService.findByPhone(newPhone);

@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.phone.station.entities.News;
 import com.phone.station.service.interfaces.NewsService;
 import com.phone.station.service.interfaces.UserService;
+import com.phone.station.utils.PageIndexFetcher;
 import com.phone.station.web.dispatcher.Controller;
 import com.phone.station.web.paginator.Paginator;
 import com.phone.station.web.paginator.records.NewsRecordsCollection;
@@ -36,12 +37,7 @@ public class AdminController extends Controller {
 
 	@Override
 	public String get(HttpServletRequest request, HttpServletResponse response) {
-		String pageIndexStr = request.getParameter("page-index");
-		int pageIndex = 1;
-		if(pageIndexStr != null){
-			pageIndex = Integer.valueOf(pageIndexStr);
-		}
-
+		int pageIndex = PageIndexFetcher.getPageIndex(request);
 		request.setAttribute("admin", userService.findByUsername(ADMIN_USERNAME));
 		request.setAttribute("newsPage", paginator.findPage(pageIndex));
 
