@@ -1,7 +1,5 @@
 package com.phone.station.web.controllers.user;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,8 +16,6 @@ public class PaymentsController extends Controller {
 	private static final String PAYMENT_PAGE = "paymentPage";
 
 	private static final int NUM_OR_RECORDS_PER_PAGE = 5;
-
-	private static final String PAGE_INDEX_PARAMETER = "page-index";
 
 	private PaymentService paymentService;
 	private Paginator<Payment> paginator;

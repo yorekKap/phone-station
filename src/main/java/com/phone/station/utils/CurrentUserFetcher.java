@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.catalina.Session;
 
-import com.phone.station.config.WebAppContext;
 import com.phone.station.entities.User;
 import com.phone.station.service.interfaces.UserService;
 import com.phone.station.web.security.UserPrincipal;

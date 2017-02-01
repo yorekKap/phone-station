@@ -5,8 +5,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.phone.station.exceptions.web.pagination.PaginationException;
-import com.phone.station.web.paginator.functions.FindAllWithLimitFunction;
-
 
 /**
  * Class for splitting large set of entities into pages
@@ -20,8 +18,6 @@ public class Paginator<T> {
 
 	private int numOfRecordsPerPage;
 	private RecordsCollection<T> recordsCollection;
-
-
 
 	public Paginator(int numOfRecordsPerPage) {
 		this.numOfRecordsPerPage = numOfRecordsPerPage;
